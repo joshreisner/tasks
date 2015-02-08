@@ -6,19 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Project;
 use DB;
 use Illuminate\Http\Request;
+use Input;
+use Str;
 
 
 class ClientController extends Controller {
-
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		$this->middleware('auth');
-	}
 
 	/**
 	 * Display a listing of the resource.
@@ -53,7 +45,7 @@ class ClientController extends Controller {
 		$client->name = Str::title(Input::get('name'));
 		$client->hours = $client->amount = 0;
 		$client->save();
-		return Redirect::action('ClientController@show', $client->id);
+		return redirect()->action('ClientController@show', $client->id);
 	}
 
 	/**
@@ -80,7 +72,7 @@ class ClientController extends Controller {
 	public function edit($id)
 	{
 		if (!$client = Client::find($id)) Redirect::action('ClientController@index');
-		return View::make('client.edit', compact('client'));
+		return view('client.edit', compact('client'));
 	}
 
 	/**
@@ -99,7 +91,7 @@ class ClientController extends Controller {
 			$client->amount = Task::whereIn('project_id', $projects)->sum('amount');
 		}
 		$client->save();
-		return Redirect::action('ClientController@show', $client->id);
+		return redirect()->action('ClientController@show', $client->id);
 	}
 
 	/**
@@ -117,7 +109,7 @@ class ClientController extends Controller {
 		foreach ($client->projects as $project) $project_controller->destroy($project->id);
 		
 		$client->delete();
-		return Redirect::action('ClientController@index');
+		return redirect()->action('ClientController@index');
 
 	}
 	
