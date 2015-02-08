@@ -11,12 +11,15 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
-
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+
+Route::get('/', function(){
+	return redirect()->action('TaskController@index');
+});
 
 Route::resource('tasks', 'TaskController');
 Route::resource('clients', 'ClientController');

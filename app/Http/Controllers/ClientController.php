@@ -1,14 +1,24 @@
 <?php namespace App\Http\Controllers;
 
+use App\Client;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Project;
+use DB;
 use Illuminate\Http\Request;
 
-use App\Client;
-use DB;
 
 class ClientController extends Controller {
+
+	/**
+	 * Create a new controller instance.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -29,7 +39,7 @@ class ClientController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		return view('client.create');
 	}
 
 	/**
@@ -39,7 +49,11 @@ class ClientController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		$client = new Client;
+		$client->name = Str::title(Input::get('name'));
+		$client->hours = $client->amount = 0;
+		$client->save();
+		return Redirect::action('ClientController@show', $client->id);
 	}
 
 	/**
@@ -65,7 +79,8 @@ class ClientController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		if (!$client = Client::find($id)) Redirect::action('ClientController@index');
+		return View::make('client.edit', compact('client'));
 	}
 
 	/**
@@ -76,7 +91,15 @@ class ClientController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+		$client = Client::find($id);
+		$client->name = Input::get('name');
+		$client->hours = $client->amount = 0;
+		if ($projects = Project::where('client_id', $id)->lists('id')) {
+			$client->hours = Task::whereIn('project_id', $projects)->count();
+			$client->amount = Task::whereIn('project_id', $projects)->sum('amount');
+		}
+		$client->save();
+		return Redirect::action('ClientController@show', $client->id);
 	}
 
 	/**
@@ -87,7 +110,26 @@ class ClientController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		//		$client = Client::find($id);
+
+		# Delete dependencies
+		$project_controller = new ProjectController;
+		foreach ($client->projects as $project) $project_controller->destroy($project->id);
+		
+		$client->delete();
+		return Redirect::action('ClientController@index');
+
+	}
+	
+	/**
+	 * Update a client's totals
+	 */
+	public static function updateTotals($id) {
+		//client
+		$client = Client::find($id);
+		$client->amount = Project::where('client_id', $client->id)->sum('amount');
+		$client->hours = Project::where('client_id', $client->id)->sum('hours');
+		$client->save();		
 	}
 
 }

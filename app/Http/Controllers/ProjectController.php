@@ -4,11 +4,23 @@ use App\Client;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Project;
+use App\Task;
 use DB;
 use Illuminate\Http\Request;
+use Input;
 use PDF;
 
 class ProjectController extends Controller {
+
+	/**
+	 * Create a new controller instance.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -56,7 +68,7 @@ class ProjectController extends Controller {
 		$project->fixed = Input::has('fixed') ? 1 : 0;
 		$project->save();
 
-		return Redirect::action('ProjectController@show', [$project->id]);
+		return redirect()->action('ProjectController@show', [$project->id]);
 	}
 
 	/**
@@ -70,7 +82,7 @@ class ProjectController extends Controller {
 		if (!$project = Project::with(['tasks'=>function($query){
 			$query->select(['*', DB::raw('closed_at IS NULL AS open')]);
 			$query->orderBy('open', 'desc')->orderBy('urgent', 'desc')->orderBy('closed_at', 'desc');
-		}])->find($id)) Redirect::action('ProjectController@index');
+		}])->find($id)) return redirect()->action('ProjectController@index');
 		return view('project.show', compact('project'));
 	}
 
@@ -82,7 +94,7 @@ class ProjectController extends Controller {
 	 */
 	public function edit($id)
 	{
-		if (!$project = Project::find($id)) Redirect::action('ProjectController@index');
+		if (!$project = Project::find($id)) return redirect()->action('ProjectController@index');
 		
 		# Infer project rate	
 		if (!empty($project->amount) && empty($project->rate) && $project->hours > 0) {
@@ -128,7 +140,7 @@ class ProjectController extends Controller {
 		
 		self::updateTotals($id);
 				
-		return Redirect::action('ProjectController@show', $project->id);
+		return redirect()->action('ProjectController@show', $project->id);
 	}
 
 	/**
@@ -149,7 +161,7 @@ class ProjectController extends Controller {
 
 		ClientController::updateTotals($project->client_id);
 
-		return Redirect::action('ProjectController@index');
+		return redirect()->action('ProjectController@index');
 	}
 
 	/**
@@ -164,6 +176,44 @@ class ProjectController extends Controller {
 		return PDF::loadView('project.invoice', compact('project'))
 			->stream();
 			//->download(Str::slug($project->name) . '.pdf'); 
+	}
+
+	/**
+	 * Update a project and client's totals
+	 */
+	public static function updateTotals($id) {
+		
+		$project = Project::find($id);
+		$project->hours = Task::where('project_id', $project->id)->sum('hours');
+		if (!$project->fixed) $project->amount = Task::where('project_id', $project->id)->sum('amount');
+		$project->save();
+		
+		ClientController::updateTotals($project->client_id);		
+	}
+	
+	/**
+	 * Taxes view
+	 */
+	public function income() {
+
+		$years = ['Unreceived'=>[]];
+
+		$projects = Project::whereNotNull('closed_at')
+			->where('amount', '>', 0)
+			->orderBy('received_at', 'desc')
+			->orderBy('submitted_at', 'desc')
+			->orderBy('closed_at', 'desc')
+			->get();
+
+		foreach ($projects as $project) {
+			$key = ($project->received_at) ? $project->received_at->format('Y') : 'Unreceived';
+			if (!isset($years[$key])) $years[$key] = [];
+			$years[$key][] = $project;
+		}
+		
+		if (!count($years['Unreceived'])) unset($years['Unreceived']);
+		
+		return View::make('project.income', ['years'=>$years]);
 	}
 
 }

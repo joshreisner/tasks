@@ -1,13 +1,17 @@
 <?php namespace App\Http\Controllers;
 
+use App\Client;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
-
 use App\Project;
 use App\Task;
-use App\Client;
+use Auth;
+use Input;
+use Session;
+use Illuminate\Http\Request;
+use URL;
+use Str;
+
 
 class TaskController extends Controller {
 
@@ -34,7 +38,10 @@ class TaskController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		return view('task.create', [
+			'projects'=>self::getProjectSelect(),
+			'return_to'=>URL::previous() ?: URL::action('TaskController@index'),
+		]);
 	}
 
 	/**
@@ -44,7 +51,27 @@ class TaskController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		$task = new Task;
+		$task->title = Str::title(Input::get('title'));
+		$task->created_by = Auth::id();
+		if (Input::has('project_id')) {
+			$task->project_id = Input::get('project_id');
+			Session::set('project_id', $task->project_id);
+		}
+		$task->hours = Input::has('hours') ? Input::get('hours') : 0;
+		$task->closed_at = Input::has('closed_at') ? Input::get('closed_at') : null;
+		$task->urgent = Input::has('urgent') ? 1 : 0;
+		if (Input::has('closed_at')) $task->urgent = 0; // closed tasks are not urgent
+		if (Input::has('fixed')) {
+			$task->fixed = 1;
+			$task->amount = (Input::has('amount')) ? $task->amount : 0;
+		} else {
+			$task->fixed = 0;
+			$task->amount = $task->hours * ($task->project->rate ?: 0);
+		}
+		$task->save();
+		ProjectController::updateTotals($task->project_id);
+		return redirect(Input::get('return_to'));
 	}
 
 	/**
@@ -70,8 +97,7 @@ class TaskController extends Controller {
 		return view('task.edit', [
 			'task'=>$task,
 			'projects'=>self::getProjectSelect($task->project_id),
-			//'return_to'=>URL::previous() ?: URL::action('TaskController@index'),
-			'return_to'=>action('TaskController@index'),
+			'return_to'=>URL::previous() ?: URL::action('TaskController@index'),
 		]);
 	}
 
@@ -83,7 +109,39 @@ class TaskController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+		$task = Task::find($id);
+		$task->title = Input::get('title');
+		if (Input::has('project_id')) {
+			$task->project_id = Input::get('project_id');
+			Session::set('project_id', $task->project_id);
+		}
+		$task->hours = Input::has('hours') ? Input::get('hours') : 0;
+		$task->closed_at = Input::has('closed_at') ? Input::get('closed_at') : null;
+		$task->urgent = Input::has('urgent') ? 1 : 0;
+		if (Input::has('closed_at')) $task->urgent = 0; // closed tasks are not urgent
+		if (Input::has('fixed')) {
+			$task->fixed = 1;
+			$task->amount = (Input::has('amount')) ? Input::get('amount') : 0;
+		} else {
+			$task->fixed = 0;
+			$task->amount = $task->hours * ($task->project->rate ?: 0);
+		}
+		$task->save();
+		ProjectController::updateTotals($task->project_id);
+		return redirect(Input::get('return_to'));
+	}
+
+	/**
+	 * History page
+	 */
+	public function history() {
+		return View::make('task.history', [
+			'tasks'=>Task::with('project')
+				->whereNotNull('closed_at')
+				->orderBy('closed_at', 'desc')
+				->orderBy('updated_at', 'desc')
+				->paginate(20),
+		]);
 	}
 
 	/**
@@ -94,7 +152,10 @@ class TaskController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		$task = Task::find($id);
+		$task->delete();
+		ProjectController::updateTotals($task->project_id);
+		return Redirect::action('TaskController@index');
 	}
 
 	# Populate grouped client/project dropdown 
