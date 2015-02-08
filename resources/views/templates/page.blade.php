@@ -10,11 +10,11 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			{!! link_to('/', '', ['class'=>'navbar-brand glyphicon glyphicon-check', 'title'=>trans('messages.app.name')]) !!}
+			{!! link_to('/tasks', '', ['class'=>'navbar-brand glyphicon glyphicon-check', 'title'=>trans('messages.app.name')]) !!}
 		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li @if (Request::path() == '/') class="active"@endif><a href="/">@lang('messages.task.title')</a></li>
+				<li @if (Request::path() == 'tasks') class="active"@endif><a href="/tasks">@lang('messages.task.title')</a></li>
 				<li @if (Request::path() == 'clients') class="active"@endif><a href="/clients">@lang('messages.client.title')</a></li>
 				<li @if (Request::path() == 'projects') class="active"@endif><a href="/projects">@lang('messages.project.title')</a></li>
 				<li @if (Request::path() == 'history') class="active"@endif><a href="/history">@lang('messages.task.history')</a></li>
