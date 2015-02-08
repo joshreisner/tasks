@@ -1,0 +1,166 @@
+$gray-lighter:			#ddd
+$brand-primary:         #428bca
+$brand-success:         #5cb85c
+$brand-warning:         #f0ad4e
+$brand-danger:          #d9534f
+$brand-info:            #5bc0de
+
+@import "../../../bower_components/bootstrap-sass/lib/bootstrap.scss"
+
+@font-face
+	font-family: 'Akkurat'
+	src: url('../fonts/AkkRg_Pro_1.eot?') format('eot'), url('../fonts/AkkRg_Pro_1.woff') format('woff'), url('../fonts/AkkRg_Pro_1.ttf') format('truetype'), url('../fonts/AkkRg_Pro_1.svg') format('svg')
+	font-weight: normal
+	font-style: normal
+
+@font-face
+	font-family: 'AkkuratBold'
+	src: url('../fonts/AkkBd_Pro_1.eot?') format('eot'), url('../fonts/AkkBd_Pro_1.woff') format('woff'), url('../fonts/AkkBd_Pro_1.ttf') format('truetype'), url('../fonts/AkkBd_Pro_1.svg') format('svg')
+	font-weight: normal
+	font-style: normal
+
+body
+	background-color: $gray-lighter
+	font-family: 'Akkurat', Sans-Serif
+	font-size: 15px
+
+h1, h2, h3, td.group, tfoot td
+	font-family: 'AkkuratBold', Sans-Serif
+
+dl
+	overflow: auto
+	margin-bottom: 20px
+	dt
+		float: left
+		width: 30%
+
+.btn, .form-control
+	border-radius: 0
+		
+form
+	margin-bottom: 20px
+	
+	.btn
+		padding-top: 9px
+		
+	.form-group
+		margin-bottom: 20px
+		&.has-error
+			input
+				background-color: lighten($brand-danger, 38%)
+		&:last-child
+			margin-bottom: 0
+			
+	.help-inline
+		display: none !important
+	
+	.input-group.date .input-group-addon
+		cursor: pointer
+			
+	select, input[type=date]
+		line-height: 1
+		padding: 0 11px
+		-webkit-appearance: none
+
+	.form-control
+		padding-top: 8px
+		&[disabled]
+			background-color: #f0f0f0
+
+.modal
+	.modal-dialog
+		padding-top: 15%
+	.modal-content
+		border-radius: 0
+		border: 0
+		box-shadow: 6px 6px 0px 0px $gray-light
+	.modal-header
+		padding: 15px 20px 10px
+		background-color: $gray
+		color: white
+	.modal-footer
+		margin-top: 0
+		padding-top: 0
+		border-top: 0
+
+.navbar
+	margin-bottom: 0
+	.navbar-brand
+		font-size: 27px
+		width: 57px
+		color: $gray
+		line-height: 19px
+
+.container
+	background-color: white
+	min-height: 100%
+
+table.table
+	thead th
+		font-weight: normal
+		color: #bbb
+		padding-bottom: 2px
+		
+	tr:first-child
+		td
+			border-top: 0
+			&.group
+				padding-top: 10px
+			
+	tr
+		th:first-child, td:first-child
+			padding-left: 0
+		th:last-child, td:last-child
+			padding-right: 0
+					
+	tfoot
+		tr:first-child
+			td
+				border-top: 2px solid $gray-lighter
+		
+	td.group
+		text-transform: uppercase
+		padding-top: 40px
+		padding-bottom: 4px
+		font-size: 1.3rem
+		a
+			color: $gray
+			display: block
+			
+	tr.closed td, tr.closed td a
+		color: $gray-lighter
+		text-decoration: line-through
+		
+	tr.urgent td a
+		color: $brand-danger
+		
+	td.right, th.right
+		text-align: right
+	
+	td.fixed
+		text-decoration: underline
+		
+@media (min-width: 768px)
+
+	body
+		padding-bottom: 40px
+		
+	.navbar
+		margin-bottom: 20px
+
+	dl
+		dt
+			width: 10%
+			
+	table.table
+		tr:first-child td.group
+			padding-top: 40px
+		td.group
+			a
+				display: inline
+				&:nth-child(2)
+					color: $gray-light
+					&::before
+						content: ' >\0000a0 '
+						margin: 0 2px
+
