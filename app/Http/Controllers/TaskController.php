@@ -135,7 +135,7 @@ class TaskController extends Controller {
 	 * History page
 	 */
 	public function history() {
-		return View::make('task.history', [
+		return view('task.history', [
 			'tasks'=>Task::with('project')
 				->whereNotNull('closed_at')
 				->orderBy('closed_at', 'desc')

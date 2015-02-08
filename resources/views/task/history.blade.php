@@ -21,8 +21,8 @@
 		<tbody>
 			@foreach ($tasks as $task)
 			<tr @if ($task->closed_at) class="closed" @elseif ($task->urgent) class="urgent" @endif>
-				<td>{{ link_to_action('ProjectController@show', $task->project->name, $task->project->id) }}</td>
-				<td>{{ link_to_action('TaskController@edit', $task->title, $task->id) }}</td>
+				<td>{!! link_to_action('ProjectController@show', $task->project->name, $task->project->id) !!}</td>
+				<td>{!! link_to_action('TaskController@edit', $task->title, $task->id) !!}</td>
 				<td class="hidden-xs">{{ format_date($task->closed_at) }}</td>
 				<td class="hidden-xs right">{{ format_number($task->hours) }}</td>
 				<td class="hidden-xs right">{{ format_money($task->amount) }}</td>
@@ -30,7 +30,7 @@
 			@endforeach
 		</tbody>
 	</table>
-	<div style="text-align: center;">{{ $tasks->links() }}</div>
+	<div style="text-align: center;">{!! $tasks->render() !!}</div>
 	@endif
 
 </div>

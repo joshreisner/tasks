@@ -9,6 +9,7 @@ use DB;
 use Illuminate\Http\Request;
 use Input;
 use PDF;
+use URL;
 
 class ProjectController extends Controller {
 
@@ -213,7 +214,7 @@ class ProjectController extends Controller {
 		
 		if (!count($years['Unreceived'])) unset($years['Unreceived']);
 		
-		return View::make('project.income', ['years'=>$years]);
+		return view('project.income', compact('years'));
 	}
 
 }

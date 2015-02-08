@@ -11,21 +11,37 @@
 |
 */
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
-
-
+//login screen
 Route::get('/', function(){
-	return redirect()->action('TaskController@index');
+	if (Auth::check()) return redirect()->action('TaskController@index');
+	return view('auth.login');
 });
 
-Route::resource('tasks', 'TaskController');
-Route::resource('clients', 'ClientController');
-Route::resource('projects', 'ProjectController');
-Route::get('projects/invoice/{project_id}', 'ProjectController@invoice');
+//login action
+Route::post('auth/login', function(){
+	if (Auth::attempt(['email' => Input::get('email'), 'password' => Input::get('password')], true)) {
+		return redirect()->action('TaskController@index');
+	}
+	return redirect('/');
+});
 
+Route::group(['middleware' => 'auth'], function()
+{
+
+	//logout action
+	Route::get('logout', function(){
+		Auth::logout();
+		return redirect('/');
+	});
+
+	Route::resource('tasks', 'TaskController');
+	Route::resource('clients', 'ClientController');
+	Route::resource('projects', 'ProjectController');
+	Route::get('projects/invoice/{project_id}', 'ProjectController@invoice');
+	Route::get('history', 'TaskController@history');
+	Route::get('income', 'ProjectController@income');
+	
+});
 
 # Form macros
 Form::macro('date', function($name, $value=null, $attributes=[])

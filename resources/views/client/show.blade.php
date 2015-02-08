@@ -8,7 +8,7 @@
 			
 		<div class="form-group">
     		{!! link_to_action('ClientController@edit', trans('messages.client.edit'), [$client->id], ['class'=>'btn btn-default']) !!}
-    		{!! link_to_action('ProjectController@create', trans('messages.project.create'), null, ['class'=>'btn btn-default']) !!}
+    		{!! link_to_action('ProjectController@create', trans('messages.project.create'), [], ['class'=>'btn btn-default']) !!}
     	</div>
 			
 		@if ($client->projects->count())

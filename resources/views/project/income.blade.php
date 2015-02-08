@@ -23,8 +23,8 @@
 				</tr>
 				@foreach ($projects as $project)
 				<tr>
-					<td>{{ link_to(URL::action('ClientController@show', $project->client->id), $project->client->name) }}</td>
-					<td>{{ link_to(URL::action('ProjectController@show', $project->id), $project->name) }}</td>
+					<td>{!! link_to(URL::action('ClientController@show', $project->client->id), $project->client->name) !!}</td>
+					<td>{!! link_to(URL::action('ProjectController@show', $project->id), $project->name) !!}</td>
 					<td class="hidden-xs">{{ format_date($project->closed_at) }}</td>
 					<td class="hidden-xs">{{ format_date($project->submitted_at) }}</td>
 					<td class="hidden-xs">{{ format_date($project->received_at) }}</td>
