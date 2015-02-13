@@ -155,7 +155,7 @@ class TaskController extends Controller {
 		$task = Task::find($id);
 		$task->delete();
 		ProjectController::updateTotals($task->project_id);
-		return Redirect::action('TaskController@index');
+		return redirect()->action('TaskController@index');
 	}
 
 	# Populate grouped client/project dropdown 

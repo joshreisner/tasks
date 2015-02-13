@@ -59,7 +59,7 @@ class ClientController extends Controller {
 		if (!$client = Client::with(['projects'=>function($query){
 			$query->select(['*', DB::raw('closed_at IS NULL AS open')]);
 			$query->orderBy('open', 'desc')->orderBy('closed_at', 'desc')->orderBy('closed_at', 'desc');
-		}])->find($id)) Redirect::action('ClientController@index');
+		}])->find($id)) return redirect()->action('ClientController@index');
 		return view('client.show', compact('client'));
 	}
 
@@ -71,7 +71,7 @@ class ClientController extends Controller {
 	 */
 	public function edit($id)
 	{
-		if (!$client = Client::find($id)) Redirect::action('ClientController@index');
+		if (!$client = Client::find($id)) return redirect()->action('ClientController@index');
 		return view('client.edit', compact('client'));
 	}
 
