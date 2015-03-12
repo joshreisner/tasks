@@ -11,7 +11,7 @@
 		<link rel="icon" href="/assets/img/favorite-icon.png">
 		{!! HTML::style('/assets/css/main.min.css') !!}
 	</head>
-	<body>
+	<body @if (Auth::guest()) class="login"@endif>
 		
 		@yield('content')
 
