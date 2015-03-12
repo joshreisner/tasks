@@ -10,7 +10,16 @@
 	<div class="row week">
 		@foreach ($days as $day=>$hours)
 		<div class="col-md-2 col-xs-6 day">
-		{{ $day }}<br>
+		<small>{{ $day }}</small>
+		{{ $hours }}
+		</div>
+		@endforeach
+	</div>
+	
+	<div class="row week">
+		@foreach ($weeks as $day=>$hours)
+		<div class="col-md-2 col-xs-6 day">
+		<small>{{ $day }}</small>
 		{{ $hours }}
 		</div>
 		@endforeach

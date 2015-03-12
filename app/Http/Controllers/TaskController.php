@@ -143,13 +143,16 @@ class TaskController extends Controller {
 	public function history() {
 		
 		//get last six days' totals
-		$days = [];
+		$days = $weeks = [];
 		for ($i = 0; $i < 6; $i++) {
-			$date = time() - 60 * 60 * 24 * $i;
-			$days[date('l', $date)] = Task::where('closed_at', date('Y-m-d', $date))->sum('hours');
+			$day = time() - 60 * 60 * 24 * $i;
+			$end = time() - 60 * 60 * 24 * 7 * $i;
+			$start = time() - 60 * 60 * 24 * 7 * ($i + 1) + 60 * 60 * 24;
+			$weeks[date('M j', $start) . '–' . date('M j', $end)] = Task::where('closed_at', '>=', date('Y-m-d', $start))->where('closed_at', '<=', date('Y-m-d', $end))->sum('hours');
+			$days[date('l', $day)] = Task::where('closed_at', date('Y-m-d', $day))->sum('hours');
 		}
-		$days = array_reverse($days);
-		//dd($days);
+		//$days = array_reverse($days);
+		//dd($weeks);
 		
 		//get tasks
 		$tasks = Task::with('project')
@@ -159,7 +162,7 @@ class TaskController extends Controller {
 				->paginate(20);
 		
 		
-		return view('task.history', compact('days', 'tasks'));
+		return view('task.history', compact('days', 'weeks', 'tasks'));
 	}
 
 	/**
