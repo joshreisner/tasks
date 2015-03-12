@@ -5,7 +5,7 @@ $brand-warning:         #f0ad4e
 $brand-danger:          #d9534f
 $brand-info:            #5bc0de
 
-@import "../../../bower_components/bootstrap-sass/lib/bootstrap.scss"
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss"
 
 @font-face
 	font-family: 'Akkurat'
@@ -67,6 +67,11 @@ form
 		&[disabled]
 			background-color: #f0f0f0
 
+footer
+	text-align: center
+	ul.pagination
+		margin-bottom: 25px
+	
 .modal
 	.modal-dialog
 		padding-top: 15%
@@ -91,11 +96,13 @@ form
 		color: $gray
 		line-height: 19px
 
-.container
+#container
 	background-color: white
 	min-height: 100%
 
 table.table
+	margin-bottom: 0
+	
 	thead th
 		font-weight: normal
 		color: #bbb
@@ -142,16 +149,13 @@ table.table
 		
 @media (min-width: 768px)
 
-	body
-		padding-bottom: 40px
-		
-	.navbar
-		margin-bottom: 20px
-
 	dl
 		dt
 			width: 10%
-			
+	
+	.navbar .navbar-right li a
+		padding-right: 0
+	
 	table.table
 		tr:first-child td.group
 			padding-top: 40px

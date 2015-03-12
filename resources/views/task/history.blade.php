@@ -11,6 +11,7 @@
 	<table class="table">
 		<thead>
 			<tr>
+				<th class="hidden-xs">@lang('messages.client.single')</th>
 				<th class="hidden-xs">@lang('messages.project.single')</th>
 				<th class="hidden-xs">@lang('messages.task.name')</th>
 				<th class="hidden-xs">@lang('messages.task.closed_at')</th>
@@ -21,6 +22,7 @@
 		<tbody>
 			@foreach ($tasks as $task)
 			<tr @if ($task->closed_at) class="closed" @elseif ($task->urgent) class="urgent" @endif>
+				<td>{!! link_to_action('ClientController@show', $task->project->client->name, $task->project->client->id) !!}</td>
 				<td>{!! link_to_action('ProjectController@show', $task->project->name, $task->project->id) !!}</td>
 				<td>{!! link_to_action('TaskController@edit', $task->title, $task->id) !!}</td>
 				<td class="hidden-xs">{{ format_date($task->closed_at) }}</td>
@@ -30,7 +32,9 @@
 			@endforeach
 		</tbody>
 	</table>
-	<div style="text-align: center;">{!! $tasks->render() !!}</div>
+	<footer>
+		{!! $tasks->render() !!}
+	</footer
 	@endif
 
 </div>

@@ -43,7 +43,7 @@
 	</div>
 </nav>
 
-<div class="container">
+<div id="container" class="container-fluid">
 	<div class="row page">
 		@yield('page')
 	</div>

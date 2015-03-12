@@ -1,7 +1,7 @@
-//= include ../../../bower_components/jquery/dist/jquery.js
-//= include ../../../bower_components/jquery-validation/dist/jquery.validate.js
-//= include ../../../bower_components/bootstrap-sass/dist/js/bootstrap.js
-//= include ../../../bower_components/jstzdetect/jstz.js
+//= include ../../bower_components/jquery/dist/jquery.js
+//= include ../../bower_components/jquery-validation/dist/jquery.validate.js
+//= include ../../bower_components/bootstrap-sass/assets/javascripts/bootstrap.js
+//= include ../../bower_components/jstzdetect/jstz.js
 
 $(function(){
 
