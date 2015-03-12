@@ -3,9 +3,9 @@
 @section('page')
 
 <div class="col-md-12">
-	<h2>
+	<h1>
 		@lang('messages.task.history')
-	</h2>
+	</h1>
 
 	@if ($tasks->count())
 	<table class="table">

@@ -4,7 +4,7 @@
 
 	<div class="col-md-12">
 
-		<h2>@lang('messages.task.create')</h2>
+		<h1>@lang('messages.task.create')</h1>
 
 		{!! Form::open(['action'=>'TaskController@store']) !!}
 
