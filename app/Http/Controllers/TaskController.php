@@ -112,8 +112,13 @@ class TaskController extends Controller {
 		$task = Task::find($id);
 		$task->title = Input::get('title');
 		if (Input::has('project_id')) {
+			if (Input::get('project_id') != $task->project_id) {
+				//remember to update old project tasks as well
+				$old_project_id = $task->project_id;
+			}
 			$task->project_id = Input::get('project_id');
 			Session::set('project_id', $task->project_id);
+			
 		}
 		$task->hours = Input::has('hours') ? Input::get('hours') : 0;
 		$task->closed_at = Input::has('closed_at') ? Input::get('closed_at') : null;
@@ -128,6 +133,7 @@ class TaskController extends Controller {
 		}
 		$task->save();
 		ProjectController::updateTotals($task->project_id);
+		if (!empty($old_project_id)) ProjectController::updateTotals($old_project_id);
 		return redirect(Input::get('return_to'));
 	}
 
