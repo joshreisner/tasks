@@ -135,13 +135,25 @@ class TaskController extends Controller {
 	 * History page
 	 */
 	public function history() {
-		return view('task.history', [
-			'tasks'=>Task::with('project')
+		
+		//get last six days' totals
+		$days = [];
+		for ($i = 0; $i < 6; $i++) {
+			$date = time() - 60 * 60 * 24 * $i;
+			$days[date('l', $date)] = Task::where('closed_at', date('Y-m-d', $date))->sum('hours');
+		}
+		$days = array_reverse($days);
+		//dd($days);
+		
+		//get tasks
+		$tasks = Task::with('project')
 				->whereNotNull('closed_at')
 				->orderBy('closed_at', 'desc')
 				->orderBy('updated_at', 'desc')
-				->paginate(20),
-		]);
+				->paginate(20);
+		
+		
+		return view('task.history', compact('days', 'tasks'));
 	}
 
 	/**

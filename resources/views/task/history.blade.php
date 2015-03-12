@@ -7,6 +7,15 @@
 		@lang('messages.task.history')
 	</h1>
 
+	<div class="row week">
+		@foreach ($days as $day=>$hours)
+		<div class="col-md-2 col-xs-6 day">
+		{{ $day }}<br>
+		{{ $hours }}
+		</div>
+		@endforeach
+	</div>
+	
 	@if ($tasks->count())
 	<table class="table">
 		<thead>
