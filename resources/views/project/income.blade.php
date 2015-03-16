@@ -19,9 +19,9 @@
 			@foreach ($years as $year=>$projects)
 			<tbody>
 				<tr>
-					<td class="group" colspan="5">{{ $year }}</td>
+					<td class="group" colspan="7">{{ $year }}</td>
 				</tr>
-				@foreach ($projects as $project)
+				@foreach ($projects['projects'] as $project)
 				<tr>
 					<td>{!! link_to(URL::action('ClientController@show', $project->client->id), $project->client->name) !!}</td>
 					<td>{!! link_to(URL::action('ProjectController@show', $project->id), $project->name) !!}</td>
@@ -32,6 +32,9 @@
 					<td class="hidden-xs right">{{ format_money($project->amount) }}</td>
 				</tr>
 				@endforeach
+				<tr class="total">
+					<td colspan="7">{{ format_money($projects['total']) }}</td>
+				</tr>
 			</tbody>
 			@endforeach
 		</table>

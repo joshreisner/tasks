@@ -188,7 +188,7 @@ class ProjectController extends Controller {
 	 */
 	public function income() {
 
-		$years = ['Unreceived'=>[]];
+		$years = ['Unreceived'=>['projects'=>[], 'total'=>0]];
 
 		$projects = Project::whereNotNull('closed_at')
 			->where('amount', '>', 0)
@@ -199,8 +199,9 @@ class ProjectController extends Controller {
 
 		foreach ($projects as $project) {
 			$key = ($project->received_at) ? $project->received_at->format('Y') : 'Unreceived';
-			if (!isset($years[$key])) $years[$key] = [];
-			$years[$key][] = $project;
+			if (!isset($years[$key])) $years[$key] = ['projects'=>[], 'total'=>0];
+			$years[$key]['total'] += $project->amount;
+			$years[$key]['projects'][] = $project;
 		}
 		
 		if (!count($years['Unreceived'])) unset($years['Unreceived']);
