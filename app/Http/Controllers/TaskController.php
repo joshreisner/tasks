@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Project;
 use App\Task;
 use Auth;
+use DateTime;
+use DateTimeZone;
 use Input;
 use Session;
 use Illuminate\Http\Request;
@@ -142,12 +144,16 @@ class TaskController extends Controller {
 	 */
 	public function history() {
 		
+		//get timezone offset for scoreboard 
+		$offset =  new DateTime('now', new DateTimeZone(Auth::user()->timezone));
+		$time = time() + $offset->getOffset();
+
 		//get last six days' totals
 		$days = $weeks = [];
 		for ($i = 0; $i < 6; $i++) {
-			$day = time() - 60 * 60 * 24 * $i;
-			$end = time() - 60 * 60 * 24 * 7 * $i;
-			$start = time() - 60 * 60 * 24 * 7 * ($i + 1) + 60 * 60 * 24;
+			$day = $time - 60 * 60 * 24 * $i;
+			$end = $time - 60 * 60 * 24 * 7 * $i;
+			$start = $time - 60 * 60 * 24 * 7 * ($i + 1) + 60 * 60 * 24;
 			$weeks[date('M j', $start) . '–' . date('M j', $end)] = Task::where('closed_at', '>=', date('Y-m-d', $start))->where('closed_at', '<=', date('Y-m-d', $end))->sum('hours');
 			$days[date('l', $day)] = Task::where('closed_at', date('Y-m-d', $day))->sum('hours');
 		}
