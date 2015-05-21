@@ -54,7 +54,7 @@ class TaskController extends Controller {
 	public function store()
 	{
 		$task = new Task;
-		$task->title = Str::title(Input::get('title'));
+		$task->title = self::capitalize(Input::get('title'));
 		$task->created_by = Auth::id();
 		if (Input::has('project_id')) {
 			$task->project_id = Input::get('project_id');
@@ -74,6 +74,51 @@ class TaskController extends Controller {
 		$task->save();
 		ProjectController::updateTotals($task->project_id);
 		return redirect(Input::get('return_to'));
+	}
+	
+	//slightly smarter title case than Str::title()
+	//need to handle punctuation, tags
+	private static function capitalize($string) {
+		$lowercase = ['and', 'as', 'at', 'but', 'by', 'for', 'if', 'in', 'into', 'near', 'of', 'on', 'onto', 'or', 'over', 'per', 'the', 'than', 'to', 'up', 'via', 'vs', 'with', 'yet'];
+		$capitalize = [
+			'aa'=>'AA', 
+			'api'=>'API', 
+			'asap'=>'ASAP', 
+			'css'=>'CSS', 
+			'db'=>'DB', 
+			'dc'=>'DC', 
+			'github'=>'GitHub', 
+			'html'=>'HTML', 
+			'http'=>'HTTP', 
+			'https'=>'HTTPS', 
+			'ios'=>'iOS', 
+			'iphone'=>'iPhone', 
+			'ipad'=>'iPad', 
+			'js'=>'JS', 
+			'json'=>'JSON', 
+			'os'=>'OS', 
+			'pdf'=>'PDF',
+			'php'=>'PHP',
+			'ssl'=>'SSL',
+			'tld'=>'TLD',
+			'url'=>'URL',
+			'xml'=>'XML',
+		];
+		$words = explode(' ', Str::title(trim($string)));
+		$count = count($words);
+		for ($i = 0; $i < $count; $i++) {
+			$search = strtolower($words[$i]);
+			if (array_key_exists($search, $capitalize)) {
+				$words[$i] = $capitalize[$search]; //set caps on any of these
+			} elseif (($i > 0) && ($i < $count) && in_array($search, $lowercase)) {
+				$words[$i] = strtolower($words[$i]); //lower if not first or last word
+			}
+		}
+		return implode(' ', $words);
+	}
+	
+	public function test() {
+		return self::capitalize('the quick brown ios app jumped over the lazy html page.');
 	}
 
 	/**

@@ -41,6 +41,10 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('history', 'TaskController@history');
 	Route::get('income', 'ProjectController@income');
 	
+	Route::group(['prefix' => 'test'], function(){
+		Route::get('capitalize', 'TaskController@test');
+	});
+	
 });
 
 # Form macros
