@@ -79,7 +79,7 @@ class TaskController extends Controller {
 	//slightly smarter title case than Str::title()
 	//need to handle punctuation, tags
 	private static function capitalize($string) {
-		$lowercase = ['and', 'as', 'at', 'but', 'by', 'for', 'if', 'in', 'into', 'near', 'of', 'on', 'onto', 'or', 'over', 'per', 'the', 'than', 'to', 'up', 'via', 'vs', 'with', 'yet'];
+		$lowercase = ['a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', 'if', 'in', 'into', 'near', 'of', 'on', 'onto', 'or', 'over', 'per', 'the', 'than', 'to', 'up', 'via', 'vs', 'with', 'yet'];
 		$capitalize = [
 			'aa'=>'AA', 
 			'api'=>'API', 
