@@ -86,9 +86,6 @@ Form::macro('time', function($name, $value=null, $attributes=[])
 	</div>';
 });
 
-# Set default timezone for comparisons
-if (!empty(Auth::user()->timezone)) date_default_timezone_set(Auth::user()->timezone);
-
 # Format functions
 function format_money($number=null) {
 	if ($number === null) return null;

@@ -1,5 +1,6 @@
 <?php namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
@@ -43,6 +44,8 @@ class Authenticate {
 				return redirect()->guest('/');
 			}
 		}
+
+		date_default_timezone_set(Auth::user()->timezone);
 
 		return $next($request);
 	}

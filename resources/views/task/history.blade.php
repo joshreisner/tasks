@@ -39,7 +39,7 @@
 		</thead>
 		<tbody>
 			@foreach ($tasks as $task)
-			<tr @if ($task->closed_at) class="closed" @elseif ($task->urgent) class="urgent" @endif>
+			<tr @if ($task->urgent) class="urgent" @endif>
 				<td>{!! link_to_action('ClientController@show', $task->project->client->name, $task->project->client->id) !!}</td>
 				<td>{!! link_to_action('ProjectController@show', $task->project->name, $task->project->id) !!}</td>
 				<td>{!! link_to_action('TaskController@edit', $task->title, $task->id) !!}</td>
