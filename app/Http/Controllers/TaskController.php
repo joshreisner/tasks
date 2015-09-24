@@ -234,19 +234,30 @@ class TaskController extends Controller {
 	private static function getProjectSelect($project_id=null) {
 		//project_id is necessary when viewing an archived task (the project is closed)
 		$projects = [''=>trans('messages.project.single')];
+
+		//only show open clients and projects
 		$clients = Client::whereHas('projects', function($query) use($project_id){
 			$query->whereNull('closed_at');
-			if ($project_id) $query->orWhere('id', $project_id);
 		})->with(['projects'=>function($query) use($project_id){
 			$query->whereNull('closed_at')->orderBy('name');
 			if ($project_id) $query->orWhere('id', $project_id);
-		}])->orderBy('name')->get();
-
+		}])->orderBy('name');
+		
+		//except that, when editing a project, its client might already be closed
+		if ($project_id) {
+			$project = Project::find($project_id);
+			$clients->orWhere('id', $project->client_id);
+		}
+		
+		$clients = $clients->get();
+		
+		//sort into select
 		foreach ($clients as $client) {
 			$group = [];
 			foreach ($client->projects as $project) $group[$project->id] = $project->name;
 			$projects[$client->name] = $group;
 		}
+		
 		return $projects;		
 	}
 

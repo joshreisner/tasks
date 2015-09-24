@@ -4,6 +4,7 @@ use App\Client;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Project;
+use App\Task;
 use DB;
 use Illuminate\Http\Request;
 use Input;
@@ -102,7 +103,7 @@ class ClientController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//		$client = Client::find($id);
+		$client = Client::find($id);
 
 		# Delete dependencies
 		$project_controller = new ProjectController;

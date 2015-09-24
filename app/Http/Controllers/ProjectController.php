@@ -25,7 +25,7 @@ class ProjectController extends Controller {
 			'clients'=>Client::with(['projects'=>function($query){
 				$query->select(['*', DB::raw('closed_at IS NULL AS open')]);
 				$query->orderBy('open', 'desc')->orderBy('closed_at', 'desc')->orderBy('closed_at', 'desc');
-			}])->orderBy('name')->get()
+			}])->has('projects')->orderBy('name')->get()
 		]);
 	}
 
