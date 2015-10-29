@@ -51,15 +51,18 @@ class TaskController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request)
 	{
+	    $this->validate($request, [
+	        'title' => 'required|max:255',
+	        'project_id' => 'required',
+	    ]);
+		
 		$task = new Task;
 		$task->title = self::capitalize(Input::get('title'));
 		$task->created_by = Auth::id();
-		if (Input::has('project_id')) {
-			$task->project_id = Input::get('project_id');
-			Session::set('project_id', $task->project_id);
-		}
+		$task->project_id = Input::get('project_id');
+		Session::set('project_id', $task->project_id);
 		$task->hours = Input::has('hours') ? Input::get('hours') : 0;
 		$task->closed_at = Input::has('closed_at') ? Input::get('closed_at') : null;
 		$task->urgent = Input::has('urgent') ? 1 : 0;
@@ -79,39 +82,22 @@ class TaskController extends Controller {
 	//slightly smarter title case than Str::title()
 	//need to handle punctuation, tags
 	private static function capitalize($string) {
-		$lowercase = ['a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', 'if', 'in', 'into', 'near', 'of', 'on', 'onto', 'or', 'over', 'per', 'the', 'than', 'to', 'up', 'via', 'vs', 'with', 'yet'];
-		$capitalize = [
-			'aa'=>'AA', 
-			'api'=>'API', 
-			'asap'=>'ASAP', 
-			'css'=>'CSS', 
-			'db'=>'DB', 
-			'dc'=>'DC', 
-			'github'=>'GitHub', 
-			'html'=>'HTML', 
-			'http'=>'HTTP', 
-			'https'=>'HTTPS', 
-			'ios'=>'iOS', 
-			'iphone'=>'iPhone', 
-			'ipad'=>'iPad', 
-			'js'=>'JS', 
-			'json'=>'JSON', 
-			'os'=>'OS', 
-			'pdf'=>'PDF',
-			'php'=>'PHP',
-			'ssl'=>'SSL',
-			'tld'=>'TLD',
-			'url'=>'URL',
-			'xml'=>'XML',
+		$lowercase = ['a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', 'if', 'in', 'into', 'near', 'of', 
+			'on', 'onto', 'or', 'over', 'per', 'the', 'than', 'to', 'up', 'via', 'vs', 'with', 'yet', 
 		];
+		$capitalize = ['AA', 'API', 'ASAP', 'CSS', 'DB', 'DC', 'GitHub', 'HTML', 'HTTP', 'HTTPS', 'iOS', 
+			'iPhone', 'iPad', 'JS', 'JSON', 'NY', 'NYC', 'OS', 'PDF', 'PHP', 'SquareSpace', 'SSL', 'TLD', 
+			'URL', 'WordPress', 'XML',
+		];
+		$capitalize = array_combine(array_map('strtolower', $capitalize), $capitalize);
 		$words = explode(' ', Str::title(trim($string)));
 		$count = count($words);
 		for ($i = 0; $i < $count; $i++) {
-			$search = strtolower($words[$i]);
+			$search = mb_strtolower($words[$i]);
 			if (array_key_exists($search, $capitalize)) {
 				$words[$i] = $capitalize[$search]; //set caps on any of these
 			} elseif (($i > 0) && ($i < $count) && in_array($search, $lowercase)) {
-				$words[$i] = strtolower($words[$i]); //lower if not first or last word
+				$words[$i] = mb_strtolower($words[$i]); //lower if not first or last word
 			}
 		}
 		return implode(' ', $words);
@@ -154,8 +140,13 @@ class TaskController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id, Request $request)
 	{
+	    $this->validate($request, [
+	        'title' => 'required|max:255',
+	        'project_id' => 'required',
+	    ]);
+
 		$task = Task::find($id);
 		$task->title = Input::get('title');
 		if (Input::has('project_id')) {

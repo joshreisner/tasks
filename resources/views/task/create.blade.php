@@ -6,6 +6,16 @@
 
 		<h1>@lang('messages.task.create')</h1>
 
+		@if (count($errors) > 0)
+		    <div class="alert alert-danger">
+		        <ul>
+		            @foreach ($errors->all() as $error)
+		                <li>{{ $error }}</li>
+		            @endforeach
+		        </ul>
+		    </div>
+		@endif
+		
 		{!! Form::open(['action'=>'TaskController@store']) !!}
 
 			{!! Form::hidden('return_to', $return_to) !!}

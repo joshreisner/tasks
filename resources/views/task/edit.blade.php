@@ -4,8 +4,18 @@
 
 	<div class="col-md-12">
 
-		<h2>@lang('messages.task.edit')</h2>
+		<h1>@lang('messages.task.edit')</h1>
 
+		@if (count($errors) > 0)
+		    <div class="alert alert-danger">
+		        <ul>
+		            @foreach ($errors->all() as $error)
+		                <li>{{ $error }}</li>
+		            @endforeach
+		        </ul>
+		    </div>
+		@endif
+		
 		{!! Form::open(['action'=>['TaskController@update', $task->id], 'method'=>'put']) !!}
 
 			{!! Form::hidden('return_to', $return_to) !!}
