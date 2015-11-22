@@ -12,9 +12,9 @@
 		<tbody>
 			@foreach ($open as $task)
 			<tr @if ($task->urgent) class="urgent" @endif>
-				<td class="pct50">{!! link_to(URL::action('TaskController@edit', $task->id), $task->task_name) !!}</td>
-				<td class="pct40"><a href="/clients/{{ $task->client_id }}">{{ $task->client_name }}</a> &gt; <a href="/projects/{{ $task->project_id }}">{{ $task->project_name }}</a></td>
-				<td class="pct10 hidden-xs right">{{ format_money($task->rate, 0, '/hr') }}</td>
+				<td class="col-sm-6 col-xs-6">{!! link_to(URL::action('TaskController@edit', $task->id), $task->task_name) !!}</td>
+				<td class="col-sm-5 col-xs-6"><a href="/clients/{{ $task->client_id }}">{{ $task->client_name }}</a> &gt; <a href="/projects/{{ $task->project_id }}">{{ $task->project_name }}</a></td>
+				<td class="col-sm-1 hidden-xs right">{{ format_money($task->rate, 0, '/hr') }}</td>
 			</tr>
 			@endforeach
 		</tbody>
@@ -33,19 +33,19 @@
 		<tbody>
 			@foreach ($weeks as $string => $week)
 			<tr class="group" id="{{ str_slug($string) }}">
-				<td colspan="3">
+				<td class="col-sm-10 col-xs-12" colspan="3">
 					{{ $string }}
 				</td>
-				<td class="right hidden-xs">{{ $week['hours'] }}</td>
-				<td class="right hidden-xs">{{ format_money($week['amount']) }}</td>
+				<td class="col-sm-1 hidden-xs right">{{ $week['hours'] }}</td>
+				<td class="col-sm-1 hidden-xs right">{{ format_money($week['amount']) }}</td>
 			</tr>
 				@foreach ($week['tasks'] as $task)
 			<tr>
-				<td class="pct10">{{ $task->closed_at->format('l') }}</td>
-				<td class="pct40">{!! link_to(URL::action('TaskController@edit', $task->id), $task->title) !!}</td>
-				<td class="pct30"><a href="/clients/{{ $task->project->client->id }}">{{ $task->project->client->name }}</a> &gt; <a href="/projects/{{ $task->project->id }}">{{ $task->project->name }}</a></td>
-				<td class="pct10 hidden-xs right">{{ $task->hours }}</td>
-				<td class="pct10 hidden-xs right">{{ format_money($task->amount) }}</td>
+				<td class="col-sm-1 hidden-xs">{{ $task->closed_at->format('l') }}</td>
+				<td class="col-sm-5 col-xs-6">{!! link_to(URL::action('TaskController@edit', $task->id), $task->title) !!}</td>
+				<td class="col-sm-4 col-xs-6"><a href="/clients/{{ $task->project->client->id }}">{{ $task->project->client->name }}</a> &gt; <a href="/projects/{{ $task->project->id }}">{{ $task->project->name }}</a></td>
+				<td class="col-sm-1 hidden-xs right">{{ $task->hours }}</td>
+				<td class="col-sm-1 hidden-xs right">{{ format_money($task->amount) }}</td>
 			</tr>
 				@endforeach
 			@endforeach

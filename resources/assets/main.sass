@@ -98,13 +98,14 @@ footer
 		line-height: 19px
 
 .weeks-grid
-	padding-top: 50px
+	padding-top: 30px
+	padding-bottom: 30px
 	a
 		text-align: center
 		line-height: 1
 		padding-top: 15px
 		padding-bottom: 15px
-		font-size: 45px
+		font-size: 40px
 		color: #222
 		small
 			display: block
@@ -144,9 +145,9 @@ table.table
 			
 	tr
 		th:first-child, td:first-child
-			padding-left: 0
+			//padding-left: 0
 		th:last-child, td:last-child
-			padding-right: 0
+			//padding-right: 0
 					
 	tfoot
 		tr:first-child
@@ -175,26 +176,11 @@ table.table
 	td.fixed
 		text-decoration: underline
 		
-	td.pct10
-		width: 10%
-	td.pct20
-		width: 20%
-	td.pct30
-		width: 30%
-	td.pct40
-		width: 40%
-	td.pct50
-		width: 50%
-	td.pct60
-		width: 60%
-	td.pct70
-		width: 70%
-	td.pct80
-		width: 80%
-	td.pct90
-		width: 90%
-		
 @media (min-width: 768px)
+
+	.weeks-grid
+		padding-top: 50px
+		padding-bottom: 0
 
 	dl
 		dt

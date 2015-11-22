@@ -281,17 +281,19 @@ class TaskController extends Controller {
 			->get();
 		
 		//get timezone offset for scoreboard 
-		$offset =  new DateTime('now', new DateTimeZone(Auth::user()->timezone));
-		$time = time() + $offset->getOffset();
+		$start =  new DateTime('next sunday', new DateTimeZone(Auth::user()->timezone));
 
-		//get last six days' totals
+		//get totals for last 12 weeks
 		$weeks = [];
 		for ($i = 0; $i < 12; $i++) {
 
 			//calculate this week's vars
-			$start	= $time - 60 * 60 * 24 * 7 * ($i + 1) + 60 * 60 * 24;
-			$end	= $time - 60 * 60 * 24 * 7 * $i;
-			$week	= (date('M', $start) == date('M', $end)) ? date('M j', $start) . '–' . date('j', $end) : date('M j', $start) . '–' . date('M j', $end);
+			$start->modify('-7 days');
+			$end = clone $start;
+			$end->modify('+6 days');
+			
+			//format the string as a week
+			$week = ($start->format('M') == $end->format('M')) ? $start->format('M j') . '–' . $end->format('j') : $start->format('M j') . '–' . $end->format('M j');
 
 			//initialize
 			$weeks[$week] = [
@@ -299,8 +301,8 @@ class TaskController extends Controller {
 				'hours' => 0,
 				'tasks' => Task::with('project')
 					->with('project.client')
-					->where('closed_at', '>=', date('Y-m-d', $start))
-					->where('closed_at', '<=', date('Y-m-d', $end))
+					->where('closed_at', '>=', $start)
+					->where('closed_at', '<=', $end)
 					->orderBy('closed_at', 'desc')
 					->get(),
 			];
