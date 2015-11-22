@@ -8,18 +8,18 @@
 	</h2>
 	@if ($projects->count())
 	<table class="table">
-		<thead>
+		<thead class="hidden-xs">
 			<tr>
-				<th class="hidden-xs">@lang('messages.task.name')</th>
-				<th class="hidden-xs">@lang('messages.task.created_at')</th>
-				<th class="hidden-xs right">@lang('messages.task.hours')</th>
-				<th class="hidden-xs right">@lang('messages.task.amount')</th>
+				<th>@lang('messages.task.name')</th>
+				<th>@lang('messages.task.created_at')</th>
+				<th class="right">@lang('messages.task.hours')</th>
+				<th class="right">@lang('messages.task.amount')</th>
 			</tr>
 		</thead>
 		<tbody>
 		@foreach ($projects as $project)
-			<tr>
-				<td class="group" colspan="4">
+			<tr class="group">
+				<td colspan="4">
 					{!! link_to_action('ClientController@show', $project->client->name, [$project->client->id], ['class'=>'client']) !!}
 					{!! link_to_action('ProjectController@show', $project->name, [$project->id], ['class'=>'project']) !!}
 				</td>

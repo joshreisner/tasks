@@ -251,5 +251,68 @@ class TaskController extends Controller {
 		
 		return $projects;		
 	}
+	
+	/**
+	 * Actual earned income view
+	 * The purpose of this is to make more money
+	 */
+	public function now() {
+
+		//get open tasks
+		$open = Task::
+			join('projects', 'tasks.project_id', '=', 'projects.id')
+			->join('clients', 'projects.client_id', '=', 'clients.id')
+			->whereNull('tasks.closed_at')
+			->orderBy('tasks.urgent', 'desc')
+			->orderBy('projects.rate', 'desc')
+			->orderBy('tasks.created_at')
+			->select([
+				'tasks.id',
+				'tasks.urgent',
+				'projects.id as project_id',
+				'clients.id as client_id',
+				'tasks.title as task_name',
+				'projects.name as project_name',
+				'clients.name as client_name',
+				'projects.rate'
+			])
+			->get();
+		
+		//get timezone offset for scoreboard 
+		$offset =  new DateTime('now', new DateTimeZone(Auth::user()->timezone));
+		$time = time() + $offset->getOffset();
+
+		//get last six days' totals
+		$weeks = [];
+		for ($i = 0; $i < 12; $i++) {
+
+			//calculate this week's vars
+			$start	= $time - 60 * 60 * 24 * 7 * ($i + 1) + 60 * 60 * 24;
+			$end	= $time - 60 * 60 * 24 * 7 * $i;
+			$week	= (date('M', $start) == date('M', $end)) ? date('M j', $start) . '–' . date('j', $end) : date('M j', $start) . '–' . date('M j', $end);
+
+			//initialize
+			$weeks[$week] = [
+				'amount' => 0,
+				'hours' => 0,
+				'tasks' => Task::with('project')
+					->with('project.client')
+					->where('closed_at', '>=', date('Y-m-d', $start))
+					->where('closed_at', '<=', date('Y-m-d', $end))
+					->orderBy('closed_at', 'desc')
+					->get(),
+			];
+			
+			//loop through and total them up
+			foreach ($weeks[$week]['tasks'] as $task) {
+				$weeks[$week]['amount'] += $task['amount'];
+				$weeks[$week]['hours'] += $task['hours'];
+			}
+		}
+		
+		//dd($weeks);
+		
+		return view('task.now', compact('open', 'weeks'));
+	 }
 
 }

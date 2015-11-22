@@ -25,7 +25,7 @@ body
 	&.login
 		background-color: $gray-lighter
 
-h1, h2, h3, td.group, tfoot td
+h1, h2, h3, tr.group, tfoot td
 	font-family: 'AkkuratBold', Sans-Serif
 
 dl
@@ -97,19 +97,31 @@ footer
 		color: $gray
 		line-height: 19px
 
-.row.week
-	.day
+.weeks-grid
+	padding-top: 50px
+	a
 		text-align: center
 		line-height: 1
 		padding-top: 15px
 		padding-bottom: 15px
 		font-size: 45px
+		color: #222
 		small
 			display: block
 			text-transform: uppercase
 			font-size: 18px
 			margin-bottom: 8px
-			color: $gray-light
+			color: #aaa
+		&.danger
+			color: $brand-danger
+			small
+				color: $brand-danger
+			&:first-child
+				color: inherit
+				small
+					color: #aaa
+		&:hover
+			text-decoration: none
 		
 table.table
 	margin-bottom: 0
@@ -127,8 +139,8 @@ table.table
 	tr:first-child
 		td
 			border-top: 0
-			&.group
-				padding-top: 10px
+		&.group td
+			padding-top: 10px
 			
 	tr
 		th:first-child, td:first-child
@@ -141,7 +153,7 @@ table.table
 			td
 				border-top: 2px solid $gray-lighter
 		
-	td.group
+	tr.group td
 		text-transform: uppercase
 		padding-top: 40px
 		padding-bottom: 4px
@@ -163,6 +175,25 @@ table.table
 	td.fixed
 		text-decoration: underline
 		
+	td.pct10
+		width: 10%
+	td.pct20
+		width: 20%
+	td.pct30
+		width: 30%
+	td.pct40
+		width: 40%
+	td.pct50
+		width: 50%
+	td.pct60
+		width: 60%
+	td.pct70
+		width: 70%
+	td.pct80
+		width: 80%
+	td.pct90
+		width: 90%
+		
 @media (min-width: 768px)
 
 	dl
@@ -173,9 +204,9 @@ table.table
 		padding-right: 0
 	
 	table.table
-		tr:first-child td.group
+		tr.group:first-child td
 			padding-top: 40px
-		td.group
+		tr.group td
 			a
 				display: inline
 				&:nth-child(2)

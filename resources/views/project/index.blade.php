@@ -16,8 +16,8 @@
 		</thead>
 		@foreach ($clients as $client)
 		<tbody>
-			<tr>
-				<td class="group" colspan="4">{!! link_to_action('ClientController@show', $client->name, $client->id) !!}</td>
+			<tr class="group">
+				<td colspan="4">{!! link_to_action('ClientController@show', $client->name, $client->id) !!}</td>
 			</tr>
 			@foreach ($client->projects as $project)
 			<tr @if ($project->closed_at) class="closed"@endif>

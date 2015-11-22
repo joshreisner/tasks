@@ -147,6 +147,7 @@ return [
 
 		'Illuminate\Html\HtmlServiceProvider',
 		'Barryvdh\DomPDF\ServiceProvider',
+		'Barryvdh\Debugbar\ServiceProvider',
 
 	],
 

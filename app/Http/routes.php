@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
 //login screen
 Route::get('/', function(){
 	if (Auth::check()) return redirect()->action('TaskController@index');
@@ -40,6 +29,7 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('projects/invoice/{project_id}', 'ProjectController@invoice');
 	Route::get('history', 'TaskController@history');
 	Route::get('income', 'ProjectController@income');
+	Route::get('now', 'TaskController@now');
 	
 	Route::group(['prefix' => 'test'], function(){
 		Route::get('capitalize', 'TaskController@test');
@@ -88,7 +78,7 @@ Form::macro('time', function($name, $value=null, $attributes=[])
 
 # Format functions
 function format_money($number=null) {
-	if ($number === null) return null;
+	if ($number === null || $number == 0) return null;
 	return '$' . number_format($number, 2);
 }
 

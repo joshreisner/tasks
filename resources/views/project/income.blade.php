@@ -5,21 +5,21 @@
 		<h1>@lang('messages.project.income')</h1>
 
 		<table class="table">
-			<thead>
+			<thead class="hidden-xs">
 				<tr>
-					<th class="hidden-xs">@lang('messages.client.single')</th>
-					<th class="hidden-xs">@lang('messages.project.single')</th>
-					<th class="hidden-xs">@lang('messages.project.closed_at')</th>
-					<th class="hidden-xs">@lang('messages.project.submitted_at')</th>
-					<th class="hidden-xs">@lang('messages.project.received_at')</th>
-					<th class="hidden-xs right">@lang('messages.project.hours')</th>
-					<th class="hidden-xs right">@lang('messages.project.amount')</th>
+					<th>@lang('messages.client.single')</th>
+					<th>@lang('messages.project.single')</th>
+					<th>@lang('messages.project.closed_at')</th>
+					<th>@lang('messages.project.submitted_at')</th>
+					<th>@lang('messages.project.received_at')</th>
+					<th class="right">@lang('messages.project.hours')</th>
+					<th class="right">@lang('messages.project.amount')</th>
 				</tr>
 			</thead>
 			@foreach ($years as $year=>$projects)
 			<tbody>
-				<tr>
-					<td class="group" colspan="7">{{ $year }}</td>
+				<tr class="group">
+					<td colspan="7">{{ $year }}</td>
 				</tr>
 				@foreach ($projects['projects'] as $project)
 				<tr>
