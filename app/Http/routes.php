@@ -2,7 +2,7 @@
 
 //login screen
 Route::get('/', function(){
-	if (Auth::check()) return redirect()->action('TaskController@index');
+	if (Auth::check()) return redirect()->action('TaskController@now');
 	return view('auth.login');
 });
 

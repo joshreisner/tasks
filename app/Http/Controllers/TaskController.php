@@ -24,6 +24,8 @@ class TaskController extends Controller {
 	 */
 	public function index()
 	{
+		return redirect()->action('TaskController@now');
+		
 		$projects = Project::whereHas('tasks', function($query) {
 				$query->whereNull('closed_at');
 			})->with(['tasks' => function($query){
