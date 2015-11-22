@@ -14,7 +14,7 @@
 			<tr @if ($task->urgent) class="urgent" @endif>
 				<td class="pct50">{!! link_to(URL::action('TaskController@edit', $task->id), $task->task_name) !!}</td>
 				<td class="pct40"><a href="/clients/{{ $task->client_id }}">{{ $task->client_name }}</a> &gt; <a href="/projects/{{ $task->project_id }}">{{ $task->project_name }}</a></td>
-				<td class="pct10 hidden-xs right">{{ format_money($task->rate) }}</td>
+				<td class="pct10 hidden-xs right">{{ format_money($task->rate, 0, '/hr') }}</td>
 			</tr>
 			@endforeach
 		</tbody>
@@ -24,7 +24,7 @@
 		@foreach ($weeks as $string => $week)
 		<a href="#{{ str_slug($string) }}" class="col-md-2 col-xs-6 @if ($week['amount'] < 1000) danger @endif">
 			<small>{{ $string }}</small>
-			${{ number_format(round($week['amount'])) }}
+			{{ format_money($week['amount'], 0) }}
 		</a>
 		@endforeach
 	</div>

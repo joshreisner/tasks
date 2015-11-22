@@ -77,9 +77,9 @@ Form::macro('time', function($name, $value=null, $attributes=[])
 });
 
 # Format functions
-function format_money($number=null) {
+function format_money($number=null, $decimals=2, $append=null) {
 	if ($number === null || $number == 0) return null;
-	return '$' . number_format($number, 2);
+	return '$' . number_format($number, $decimals) . $append;
 }
 
 function format_date($date=null) {
