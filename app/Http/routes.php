@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth'], function()
 	Route::resource('clients', 'ClientController');
 	Route::resource('projects', 'ProjectController');
 	Route::get('projects/invoice/{project_id}', 'ProjectController@invoice');
-	Route::get('history', 'TaskController@history');
+	//Route::get('history', 'TaskController@history');
 	Route::get('income', 'ProjectController@income');
 	Route::get('now', 'TaskController@now');
 	
