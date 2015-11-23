@@ -44,7 +44,13 @@ class TaskController extends Controller {
 				'projects.rate'
 			])
 			->get();
-		
+
+		$tasks = Task::with('project')
+			->with('project.client')
+			->where('closed_at', '>=', new DateTime('-13 weeks'))
+			->orderBy('closed_at', 'desc')
+			->get();
+				
 		//get timezone offset for scoreboard 
 		$start =  new DateTime('next sunday', new DateTimeZone(Auth::user()->timezone));
 
@@ -64,18 +70,15 @@ class TaskController extends Controller {
 			$weeks[$week] = [
 				'amount' => 0,
 				'hours' => 0,
-				'tasks' => Task::with('project')
-					->with('project.client')
-					->where('closed_at', '>=', $start)
-					->where('closed_at', '<=', $end)
-					->orderBy('closed_at', 'desc')
-					->get(),
+				'tasks' => [],
 			];
 			
-			//loop through and total them up
-			foreach ($weeks[$week]['tasks'] as $task) {
-				$weeks[$week]['amount'] += $task['amount'];
-				$weeks[$week]['hours'] += $task['hours'];
+			foreach ($tasks as $task) {
+				if ($task->closed_at >= $start && $task->closed_at <= $end) {
+					$weeks[$week]['tasks'][] = $task;
+					$weeks[$week]['amount'] += $task['amount'];
+					$weeks[$week]['hours'] += $task['hours'];
+				}
 			}
 		}
 		
