@@ -23,11 +23,36 @@ Route::group(['middleware' => 'auth'], function()
 		return redirect('/');
 	});
 
-	Route::resource('tasks', 'TaskController');
-	Route::resource('clients', 'ClientController');
-	Route::resource('projects', 'ProjectController');
+	//tasks
+	//Route::resource('tasks', 'TaskController');
+	Route::get('tasks', 'TaskController@index');
+	Route::get('tasks/create/{project_id?}', 'TaskController@create');
+	Route::post('tasks', 'TaskController@store');
+	Route::get('tasks/{task_id}/edit', 'TaskController@edit');
+	Route::put('tasks/{task_id}', 'TaskController@update');
+	Route::delete('tasks/{task_id}', 'TaskController@destroy');
+
+	//clients
+	//Route::resource('clients', 'ClientController');
+	Route::get('clients', 'ClientController@index');
+	Route::get('clients/{client_id}', 'ClientController@show');
+	Route::get('clients/create', 'ClientController@create');
+	Route::post('clients', 'ClientController@store');
+	Route::get('clients/{client_id}/edit', 'ClientController@edit');
+	Route::put('clients/{client_id}', 'ClientController@update');
+	Route::delete('clients/{client_id}', 'ClientController@destroy');
+	
+	//projects
+	//Route::resource('projects', 'ProjectController');
+	Route::get('projects', 'ProjectController@index');
+	Route::get('projects/{project_id}', 'ProjectController@show');
+	Route::get('projects/create/{client_id?}', 'ProjectController@create');
+	Route::post('projects', 'ProjectController@store');
+	Route::get('projects/{project_id}/edit', 'ProjectController@edit');
+	Route::put('projects/{project_id}', 'ProjectController@update');
+	Route::delete('projects/{project_id}', 'ProjectController@destroy');
 	Route::get('projects/invoice/{project_id}', 'ProjectController@invoice');
-	Route::get('income', 'ProjectController@income');
+	Route::get('invoices', 'ProjectController@invoices');
 	
 	Route::group(['prefix' => 'test'], function(){
 		Route::get('capitalize', 'TaskController@test');

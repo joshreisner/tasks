@@ -7,21 +7,21 @@
 		{!! Form::open(['action'=>'ProjectController@store']) !!}
 
 			<div class="form-group">
-				{!! Form::text('name', null, ['class'=>'form-control', 'placeholder'=>trans('messages.project.name'), 'autofocus']) !!}
+				{!! Form::text('name', null, ['class'=>'form-control', 'placeholder'=>'Project', 'autofocus']) !!}
 			</div>
 
 			<div class="form-group">
-				{!! Form::select('client_id', $clients, null, ['class'=>'form-control']) !!}
+				{!! Form::select('client_id', $clients, $client_id, ['class'=>'form-control']) !!}
 			</div>
 
 			<div class="form-group">
-				{!! Form::money('rate', null, ['class'=>'form-control', 'placeholder'=>trans('messages.project.rate')]) !!}
+				{!! Form::money('rate', null, ['class'=>'form-control', 'placeholder'=>'Rate']) !!}
 			</div>
 
 			<div class="form-group">
 				<div class="input-group money">
 					<span class="input-group-addon"><a class="glyphicon glyphicon-usd"></a></span>
-					{!! Form::input('number', 'amount', null, ['disabled'=>true, 'class'=>'form-control', 'step'=>5, 'placeholder'=>trans('messages.project.amount')]) !!}
+					{!! Form::input('number', 'amount', null, ['disabled'=>true, 'class'=>'form-control', 'step'=>5, 'placeholder'=>'Amount']) !!}
 					<span class="input-group-addon">{!! Form::checkbox('fixed', 1) !!}</span>
 				</div>
 			</div>
@@ -36,8 +36,8 @@
 			</div>
 
 			<div class="form-group">
-	    		<input type="submit" class="btn btn-primary" value="@lang('messages.app.save')">
-	    		{!! link_to($return_to, trans('messages.app.cancel'), ['class'=>'btn btn-default']) !!}
+	    		<input type="submit" class="btn btn-primary" value="Save">
+	    		{!! link_to($return_to, 'Cancel', ['class'=>'btn btn-default']) !!}
 	    	</div>
 
 		{!! Form::close() !!}

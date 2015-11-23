@@ -2,18 +2,18 @@
 
 @section('page')
 	<div class="col-md-12">
-		<h1>@lang('messages.project.income')</h1>
+		<h1>Invoices</h1>
 
 		<table class="table">
 			<thead class="hidden-xs">
 				<tr>
-					<th>@lang('messages.client.single')</th>
-					<th>@lang('messages.project.single')</th>
-					<th>@lang('messages.project.closed_at')</th>
-					<th>@lang('messages.project.submitted_at')</th>
-					<th>@lang('messages.project.received_at')</th>
-					<th class="right">@lang('messages.project.hours')</th>
-					<th class="right">@lang('messages.project.amount')</th>
+					<th>Client</th>
+					<th>Project</th>
+					<th>Closed</th>
+					<th>Submitted</th>
+					<th>Received</th>
+					<th class="right">Hours</th>
+					<th class="right">Amount</th>
 				</tr>
 			</thead>
 			@foreach ($years as $year=>$projects)

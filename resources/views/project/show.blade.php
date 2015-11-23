@@ -50,7 +50,7 @@
 		<div class="form-group">
 			{!! link_to_action('ProjectController@edit', trans('messages.project.edit'), [$project->id], ['class'=>'btn btn-default']) !!}</a>
     		{!! link_to_action('ProjectController@invoice', trans('messages.project.invoice'), [$project->id], ['class'=>'btn btn-default']) !!}
-    		{!! link_to_action('TaskController@create', trans('messages.task.create'), null, ['class'=>'btn btn-default']) !!}
+    		{!! link_to_action('TaskController@create', trans('messages.task.create'), [$project->id], ['class'=>'btn btn-default']) !!}
 		</div>
 	    	
 		@if ($project->tasks->count())

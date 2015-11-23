@@ -15,9 +15,8 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li @if (Request::path() == 'tasks') class="active"@endif><a href="/tasks">Tasks</a></li>
-				<!--<li @if (Request::path() == 'clients') class="active"@endif><a href="/clients">Clients</a></li>-->
 				<li @if (Request::path() == 'projects') class="active"@endif><a href="/projects">Projects</a></li>
-				<li @if (Request::path() == 'income') class="active"@endif><a href="/income">Invoices</a></li>
+				<li @if (Request::path() == 'invoices') class="active"@endif><a href="/invoices">Invoices</a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Create <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">

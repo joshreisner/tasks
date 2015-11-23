@@ -88,26 +88,16 @@ class TaskController extends Controller {
 
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
+	public function create($project_id=null) {
+		if (empty($project_id) && Session::has('project_id')) $project_id = Session::get('project_id');
 		return view('task.create', [
-			'projects'=>self::getProjectSelect(),
-			'return_to'=>URL::previous() ?: URL::action('TaskController@index'),
+			'project_id' => $project_id,
+			'projects' => self::getProjectSelect(),
+			'return_to' => URL::previous() ?: URL::action('TaskController@index'),
 		]);
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store(Request $request)
-	{
+	public function store(Request $request) {
 	    $this->validate($request, [
 	        'title' => 'required|max:255',
 	        'project_id' => 'required',

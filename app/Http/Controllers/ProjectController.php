@@ -34,11 +34,12 @@ class ProjectController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create($client_id=null)
 	{
 		return view('project.create', [
-			'clients'=>Client::orderBy('name')->lists('name', 'id'),
-			'return_to'=>URL::previous() ?: URL::action('ProjectController@index'),
+			'client_id' => $client_id,
+			'clients' => Client::orderBy('name')->lists('name', 'id'),
+			'return_to' => URL::previous() ?: URL::action('ProjectController@index'),
 		]);
 	}
 
@@ -186,11 +187,11 @@ class ProjectController extends Controller {
 	/**
 	 * Taxes view
 	 */
-	public function income() {
+	public function invoices() {
 
 		$years = ['Unreceived'=>['projects'=>[], 'total'=>0]];
 
-		$projects = Project::whereNotNull('closed_at')
+		$projects = Project::with('client')->whereNotNull('closed_at')
 			->where('amount', '>', 0)
 			->orderBy('received_at', 'desc')
 			->orderBy('submitted_at', 'desc')
@@ -206,7 +207,7 @@ class ProjectController extends Controller {
 		
 		if (!count($years['Unreceived'])) unset($years['Unreceived']);
 		
-		return view('project.income', compact('years'));
+		return view('project.invoices', compact('years'));
 	}
 
 }

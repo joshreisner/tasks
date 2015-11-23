@@ -25,7 +25,7 @@
 	    	</div>
 			
 			<div class="form-group">
-	    		{!! Form::select('project_id', $projects, Session::get('project_id'), ['class'=>'form-control']) !!}
+	    		{!! Form::select('project_id', $projects, $project_id, ['class'=>'form-control']) !!}
 	    	</div>
 			
 			<div class="form-group">
