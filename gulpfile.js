@@ -1,24 +1,27 @@
-var gulp 		= require('gulp');
-var gutil 		= require('gulp-util');
-var notify 		= require('gulp-notify');
-var sass 		= require('gulp-ruby-sass');
-var autoprefix 	= require('gulp-autoprefixer');
-var minifyCSS 	= require('gulp-minify-css');
-var rename		= require('gulp-rename');
-var include		= require('gulp-include');
-var uglify		= require('gulp-uglify');
+var gulp 		= require('gulp'),
+	gutil 		= require('gulp-util')
+	notify 		= require('gulp-notify'),
+	sass 		= require('gulp-ruby-sass'),
+	autoprefix 	= require('gulp-autoprefixer'),
+	minifyCSS 	= require('gulp-minify-css'),
+	rename		= require('gulp-rename'),
+	include		= require('gulp-include'),
+	uglify		= require('gulp-uglify')
+	livereload	= require('gulp-livereload');
 
 var inputDir	= 'resources/assets';
 var outputDir	= 'public/assets';
 
 gulp.task('main-css', function(){
-	return gulp.src(inputDir + '/main.sass')
-		.pipe(sass())
+	return sass(inputDir + '/main.sass', {
+			style: 'compressed',
+		})
 		.on('error', handleError)
 		.pipe(autoprefix('last 3 version'))
 		.pipe(minifyCSS({keepSpecialComments:0}))
         .pipe(rename({suffix: '.min'}))
-		.pipe(gulp.dest(outputDir + '/css'));
+		.pipe(gulp.dest(outputDir + '/css'))
+		.pipe(livereload());
 });
 
 gulp.task('main-js', function(){
@@ -26,12 +29,19 @@ gulp.task('main-js', function(){
 		.pipe(include())
 		.pipe(uglify())
         .pipe(rename({suffix: '.min'}))
-		.pipe(gulp.dest(outputDir + '/js'));
+		.pipe(gulp.dest(outputDir + '/js'))
+		.pipe(livereload());
 });
 
 gulp.task('watch', function(){
+	livereload.listen();
 	gulp.watch(inputDir + '/**/*.sass', ['main-css']);
 	gulp.watch(inputDir + '/**/*.js', ['main-js']);
+	livereload({start: true});
+	var livereloadPage = function () {
+		livereload.reload();
+	};
+	gulp.watch('../**/*.php', livereloadPage);
 });
 
 gulp.task('default', ['main-css', 'main-js', 'watch']);

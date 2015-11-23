@@ -2,7 +2,7 @@
 
 //login screen
 Route::get('/', function(){
-	if (Auth::check()) return redirect()->action('TaskController@now');
+	if (Auth::check()) return redirect()->action('TaskController@index');
 	return view('auth.login');
 });
 
@@ -27,9 +27,7 @@ Route::group(['middleware' => 'auth'], function()
 	Route::resource('clients', 'ClientController');
 	Route::resource('projects', 'ProjectController');
 	Route::get('projects/invoice/{project_id}', 'ProjectController@invoice');
-	//Route::get('history', 'TaskController@history');
 	Route::get('income', 'ProjectController@income');
-	Route::get('now', 'TaskController@now');
 	
 	Route::group(['prefix' => 'test'], function(){
 		Route::get('capitalize', 'TaskController@test');
@@ -76,10 +74,24 @@ Form::macro('time', function($name, $value=null, $attributes=[])
 	</div>';
 });
 
-# Format functions
+# Helper Format functions
 function format_money($number=null, $decimals=2, $append=null) {
 	if ($number === null || $number == 0) return null;
 	return '$' . number_format($number, $decimals) . $append;
+}
+
+function format_hours($number=null, $decimals=2) {
+	if ($number === null || $number == 0) return null;
+	return number_format($number, $decimals);
+}
+
+function glyphicon($icon, $tag='i') {
+	return '<' . $tag . ' class="glyphicon glyphicon-' . $icon . '"></' . $tag . '> ';
+}
+
+function format_number($number=null) {
+	if ($number === null) return null;
+	return number_format($number, 2);
 }
 
 function format_date($date=null) {
@@ -93,14 +105,4 @@ function format_date($date=null) {
 function format_integer($number=null) {
 	if ($number === null) return null;
 	return number_format($number);
-}
-
-function format_number($number=null) {
-	if ($number === null) return null;
-	return number_format($number, 2);
-}
-
-# Helper
-function glyphicon($icon, $tag='i') {
-	return '<' . $tag . ' class="glyphicon glyphicon-' . $icon . '"></' . $tag . '> ';
 }
