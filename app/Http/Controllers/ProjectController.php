@@ -14,28 +14,16 @@ use URL;
 
 class ProjectController extends Controller {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		return view('project.index', [
-			'clients'=>Client::with(['projects'=>function($query){
+	public function index(){
+		$clients = Client::with(['projects'=>function($query){
 				$query->select(['*', DB::raw('closed_at IS NULL AS open')]);
 				$query->orderBy('open', 'desc')->orderBy('closed_at', 'desc')->orderBy('closed_at', 'desc');
-			}])->has('projects')->orderBy('name')->get()
-		]);
+			}])->has('projects')->orderBy('name')->get();
+			
+		return view('project.index', compact('clients'));
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create($client_id=null)
-	{
+	public function create($client_id=null) {
 		return view('project.create', [
 			'client_id' => $client_id,
 			'clients' => Client::orderBy('name')->lists('name', 'id'),
@@ -43,13 +31,7 @@ class ProjectController extends Controller {
 		]);
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
+	public function store() {
 		$project = new Project;
 		$project->name = Str::title(Input::get('name'));
 		$project->client_id = Input::get('client_id');
@@ -64,14 +46,7 @@ class ProjectController extends Controller {
 		return redirect()->action('ProjectController@show', [$project->id]);
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
+	public function show($id) {
 		if (!$project = Project::with(['tasks'=>function($query){
 			$query->select(['*', DB::raw('closed_at IS NULL AS open')]);
 			$query->orderBy('open', 'desc')->orderBy('urgent', 'desc')->orderBy('closed_at', 'desc');
@@ -79,14 +54,7 @@ class ProjectController extends Controller {
 		return view('project.show', compact('project'));
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
+	public function edit($id) {
 		if (!$project = Project::find($id)) return redirect()->action('ProjectController@index');
 		
 		# Infer project rate	
@@ -100,14 +68,7 @@ class ProjectController extends Controller {
 		]);
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
+	public function update($id) {
 		# Save project info
 		$project = Project::find($id);
 		$project->name = Input::get('name');
@@ -136,14 +97,7 @@ class ProjectController extends Controller {
 		return redirect()->action('ProjectController@show', $project->id);
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
+	public function destroy($id) {
 		# Delete project
 		$project = Project::find($id);
 		$project->delete();
@@ -157,11 +111,7 @@ class ProjectController extends Controller {
 		return redirect()->action('ProjectController@index');
 	}
 
-	/**
-	 * Invoice
-	 */
-	public function invoice($id)
-	{
+	public function invoice($id) {
 		$project = Project::with(['tasks'=>function($query){
 			$query->whereNotNull('closed_at')->orderBy('closed_at');
 		}])->find($id);
@@ -171,9 +121,6 @@ class ProjectController extends Controller {
 			//->download(Str::slug($project->name) . '.pdf'); 
 	}
 
-	/**
-	 * Update a project and client's totals
-	 */
 	public static function updateTotals($id) {
 		
 		$project = Project::find($id);
@@ -184,22 +131,27 @@ class ProjectController extends Controller {
 		ClientController::updateTotals($project->client_id);		
 	}
 	
-	/**
-	 * Taxes view
-	 */
 	public function invoices() {
 
-		$years = ['Unreceived'=>['projects'=>[], 'total'=>0]];
+		$years = [
+			'Open'=>['projects'=>[], 'total'=>0],
+			'Unreceived'=>['projects'=>[], 'total'=>0]
+		];
 
-		$projects = Project::with('client')->whereNotNull('closed_at')
+		$projects = Project::with('client')
 			->where('amount', '>', 0)
 			->orderBy('received_at', 'desc')
 			->orderBy('submitted_at', 'desc')
 			->orderBy('closed_at', 'desc')
+			->orderBy('created_at')
 			->get();
 
 		foreach ($projects as $project) {
-			$key = ($project->received_at) ? $project->received_at->format('Y') : 'Unreceived';
+			if ($project->closed_at) {
+				$key = ($project->received_at) ? $project->received_at->format('Y') : 'Unreceived';
+			} else {
+				$key = 'Open';				
+			}
 			if (!isset($years[$key])) $years[$key] = ['projects'=>[], 'total'=>0];
 			$years[$key]['total'] += $project->amount;
 			$years[$key]['projects'][] = $project;
