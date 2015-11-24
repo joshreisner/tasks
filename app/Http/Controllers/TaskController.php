@@ -126,14 +126,14 @@ class TaskController extends Controller {
 	}
 	
 	//slightly smarter title case than Str::title()
-	//need to handle punctuation, tags
+	//todo handle punctuation
 	private static function capitalize($string) {
 		$lowercase = ['a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', 'if', 'in', 'into', 'near', 'of', 
 			'on', 'onto', 'or', 'over', 'per', 'the', 'than', 'to', 'up', 'via', 'vs', 'with', 'yet', 
 		];
-		$capitalize = ['AA', 'API', 'ASAP', 'CSS', 'DB', 'DC', 'GitHub', 'HTML', 'HTTP', 'HTTPS', 'iOS', 
-			'iPhone', 'iPad', 'JS', 'JSON', 'NY', 'NYC', 'OS', 'PDF', 'PHP', 'SquareSpace', 'SSL', 'TLD', 
-			'URL', 'WordPress', 'XML',
+		$capitalize = ['AA', 'API', 'ASAP', 'CMS', 'CSS', 'DB', 'DC', 'GitHub', 'HTML', 'HTTP', 'HTTPS', 
+			'iOS', 'iPhone', 'iPad', 'JS', 'JSON', 'NY', 'NYC', 'OS', 'PDF', 'PHP', 'SquareSpace', 'SSL', 
+			'TLD', 'URL', 'WordPress', 'XML',
 		];
 		$capitalize = array_combine(array_map('strtolower', $capitalize), $capitalize);
 		$words = explode(' ', Str::title(trim($string)));
