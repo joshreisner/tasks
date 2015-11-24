@@ -96,6 +96,16 @@ footer
 		width: 57px
 		color: $gray
 		line-height: 19px
+	.navbar-right
+		display: none
+		a
+			font-size: 22px
+			position: absolute
+			right: 0
+			padding: 13px
+			opacity: .2
+			&:hover
+				opacity: .8
 
 .weeks-grid
 	padding-top: 30px
@@ -186,8 +196,10 @@ table.table
 		dt
 			width: 10%
 	
-	.navbar .navbar-right li a
-		padding-right: 0
+	.navbar .navbar-right
+		display: block
+		li a
+			padding-right: 0
 	
 	table.table
 		tr.group:first-child td

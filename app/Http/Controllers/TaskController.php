@@ -8,6 +8,7 @@ use App\Task;
 use Auth;
 use DateTime;
 use DateTimeZone;
+use DB;
 use Input;
 use Session;
 use Illuminate\Http\Request;
@@ -226,32 +227,25 @@ class TaskController extends Controller {
 	# Populate grouped client/project dropdown 
 	private static function getProjectSelect($project_id=null) {
 		//project_id is necessary when viewing an archived task (the project is closed)
-		$projects = [''=>trans('messages.project.single')];
 
-		//only show open clients and projects
-		$clients = Client::whereHas('projects', function($query) use($project_id){
-			$query->whereNull('closed_at');
-		})->with(['projects'=>function($query) use($project_id){
-			$query->whereNull('closed_at')->orderBy('name');
-			if ($project_id) $query->orWhere('id', $project_id);
-		}])->orderBy('name');
-		
-		//except that, when editing a project, its client might already be closed
-		if ($project_id) {
-			$project = Project::find($project_id);
-			$clients->orWhere('id', $project->client_id);
+		$projects = Project::join('clients', 'projects.client_id', '=', 'clients.id')
+			->whereNull('projects.closed_at');
+		if ($project_id) $projects->orWhere('projects.id', $project_id);
+		$projects = $projects->orderBy('clients.name')
+			->orderBy('projects.name')
+			->select([
+				'projects.id',
+				'projects.name AS project_name',
+				'clients.name AS client_name',
+			])
+			->get();
+			
+		$select = [''=>'Project'];
+		foreach ($projects as $project) {
+			$select[$project->id] = $project->client_name . ' &gt; ' . $project->project_name;
 		}
 		
-		$clients = $clients->get();
-		
-		//sort into select
-		foreach ($clients as $client) {
-			$group = [];
-			foreach ($client->projects as $project) $group[$project->id] = $project->name;
-			$projects[$client->name] = $group;
-		}
-		
-		return $projects;		
+		return $select;		
 	}
 	
 }

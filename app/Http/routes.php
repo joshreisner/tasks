@@ -1,17 +1,17 @@
 <?php
 
 //login screen
-Route::get('/', function(){
-	if (Auth::check()) return redirect()->action('TaskController@index');
+Route::get('/login', ['as'=>'login', function(){
+	if (Auth::check()) return redirect()->action('home');
 	return view('auth.login');
-});
+}]);
 
 //login action
 Route::post('auth/login', function(){
 	if (Auth::attempt(['email' => Input::get('email'), 'password' => Input::get('password')], true)) {
-		return redirect()->action('TaskController@index');
+		return redirect()->route('home');
 	}
-	return redirect('/');
+	return redirect()->back();
 });
 
 Route::group(['middleware' => 'auth'], function()
@@ -20,12 +20,12 @@ Route::group(['middleware' => 'auth'], function()
 	//logout action
 	Route::get('logout', function(){
 		Auth::logout();
-		return redirect('/');
+		return redirect()->route('login');
 	});
 
 	//tasks
 	//Route::resource('tasks', 'TaskController');
-	Route::get('tasks', 'TaskController@index');
+	Route::get('/', ['as'=>'home', 'uses'=>'TaskController@index']);
 	Route::get('tasks/create/{project_id?}', 'TaskController@create');
 	Route::post('tasks', 'TaskController@store');
 	Route::get('tasks/{task_id}/edit', 'TaskController@edit');

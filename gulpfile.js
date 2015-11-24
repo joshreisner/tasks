@@ -34,14 +34,14 @@ gulp.task('main-js', function(){
 });
 
 gulp.task('watch', function(){
-	livereload.listen();
+	//livereload.listen();
 	gulp.watch(inputDir + '/**/*.sass', ['main-css']);
 	gulp.watch(inputDir + '/**/*.js', ['main-js']);
-	livereload({start: true});
-	var livereloadPage = function () {
-		livereload.reload();
-	};
-	gulp.watch('../**/*.php', livereloadPage);
+	//livereload({start: true});
+	//var livereloadPage = function () {
+		//livereload.reload();
+	//};
+	//gulp.watch('../**/*.php', livereloadPage);
 });
 
 gulp.task('default', ['main-css', 'main-js', 'watch']);
