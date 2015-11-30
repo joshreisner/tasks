@@ -45,8 +45,8 @@ Route::group(['middleware' => 'auth'], function()
 	//projects
 	//Route::resource('projects', 'ProjectController');
 	Route::get('projects', 'ProjectController@index');
-	Route::get('projects/{project_id}', 'ProjectController@show');
 	Route::get('projects/create/{client_id?}', 'ProjectController@create');
+	Route::get('projects/{project_id}', 'ProjectController@show');
 	Route::post('projects', 'ProjectController@store');
 	Route::get('projects/{project_id}/edit', 'ProjectController@edit');
 	Route::put('projects/{project_id}', 'ProjectController@update');
