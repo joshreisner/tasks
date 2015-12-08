@@ -91,11 +91,13 @@ footer
 
 .navbar
 	margin-bottom: 0
+	.navbar-nav
+		margin-top: 0
 	.navbar-brand
 		font-size: 27px
 		width: 57px
 		color: $gray
-		line-height: 19px
+		line-height: 18px
 	.navbar-right
 		display: none
 		a
@@ -196,10 +198,12 @@ table.table
 		dt
 			width: 10%
 	
-	.navbar .navbar-right
-		display: block
-		li a
-			padding-right: 0
+	.navbar 
+		.navbar-nav > a
+			padding-top: 16px
+			padding-bottom: 14px
+		.navbar-right
+			display: block
 	
 	table.table
 		tr.group:first-child td
