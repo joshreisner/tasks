@@ -56,10 +56,13 @@ $(function(){
 	}
 
 	//get timezone, update user record if different
-	var tz = jstz.determine(), $meta = $('meta[name=timezone]'), $input = $('input[name=timezone]');
+	var tz = jstz.determine(), 
+		$meta = $('meta[name=timezone]'), 
+		token = $('meta[name=token]').attr('content'),
+		$input = $('input[name=timezone]');
 	if ($meta.size()) {
 		if ($meta.attr('content') != tz.name()) {
-			$.post('/timezone', { timezone: tz.name() });
+			$.post('/timezone', { _token: token, timezone: tz.name() });
 		}
 	} else if ($input.size()) {
 		$input.val(tz.name());

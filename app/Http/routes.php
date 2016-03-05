@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Http\Request;
 
 //login screen
 Route::get('/login', ['as'=>'login', function(){
@@ -56,6 +57,12 @@ Route::group(['middleware' => 'auth'], function()
 	
 	Route::group(['prefix' => 'test'], function(){
 		Route::get('capitalize', 'TaskController@test');
+	});
+	
+	Route::post('timezone', function(Request $request){
+		$user = Auth::user();
+		$user->timezone = $request->input('timezone');
+		$user->save();
 	});
 	
 });

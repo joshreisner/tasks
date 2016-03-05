@@ -4,7 +4,8 @@
 		<title>@lang('messages.app.name')</title>
 		<meta charset="UTF-8">
 		@if (Auth::user())
-		<meta name="timezone" content="{!! Auth::user()->timezone !!}">
+		<meta name="timezone" content="{{ Auth::user()->timezone }}">
+		<meta name="token" content="{{ csrf_token() }}">
 		@endif
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/img/touch-icon.png">
