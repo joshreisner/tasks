@@ -68,7 +68,7 @@ Route::group(['middleware' => 'auth'], function()
 });
 
 # Form macros
-Form::macro('date', function($name, $value=null, $attributes=[])
+Form::macro('date_field', function($name, $value=null, $attributes=[])
 {
 	$attribute_string = '';
 	foreach ($attributes as $key=>$val) $attribute_string .= ' ' . $key . '="' . $val . '"';
@@ -82,7 +82,7 @@ Form::macro('date', function($name, $value=null, $attributes=[])
 	</div>';
 });
 
-Form::macro('money', function($name, $value=null, $attributes=[])
+Form::macro('money_field', function($name, $value=null, $attributes=[])
 {
 	$attribute_string = '';
 	foreach ($attributes as $key=>$val) $attribute_string .= ' ' . $key . '="' . $val . '"';
@@ -94,7 +94,7 @@ Form::macro('money', function($name, $value=null, $attributes=[])
 	</div>';
 });
 
-Form::macro('time', function($name, $value=null, $attributes=[])
+Form::macro('time_field', function($name, $value=null, $attributes=[])
 {
 	$attribute_string = '';
 	foreach ($attributes as $key=>$val) $attribute_string .= ' ' . $key . '="' . $val . '"';

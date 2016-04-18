@@ -15,7 +15,7 @@
 			</div>
 
 			<div class="form-group">
-				{!! Form::money('rate', null, ['class'=>'form-control', 'placeholder'=>'Rate']) !!}
+				{!! Form::money_field('rate', null, ['class'=>'form-control', 'placeholder'=>'Rate']) !!}
 			</div>
 
 			<div class="form-group">
@@ -28,10 +28,10 @@
 
 			<div class="form-group row">
 				<div class="col-md-6">
-					{!! Form::date('submitted_at', null, ['class'=>'form-control']) !!}
+					{!! Form::date_field('submitted_at', null, ['class'=>'form-control']) !!}
 				</div>
 				<div class="col-md-6">
-					{!! Form::date('received_at', null, ['class'=>'form-control']) !!}
+					{!! Form::date_field('received_at', null, ['class'=>'form-control']) !!}
 				</div>
 			</div>
 

@@ -15,11 +15,11 @@
 			</div>
 
 			<div class="form-group">
-				{!! Form::money('rate', $project->rate, ['class'=>'form-control', 'placeholder'=>trans('messages.project.rate')]) !!}
+				{!! Form::money_field('rate', $project->rate, ['class'=>'form-control', 'placeholder'=>trans('messages.project.rate')]) !!}
 			</div>
 
 			<div class="form-group">
-				{!! Form::date('closed_at', $project->closed_at, ['class'=>'form-control']) !!}
+				{!! Form::date_field('closed_at', $project->closed_at, ['class'=>'form-control']) !!}
 			</div>
 
 			<div class="form-group">
@@ -36,10 +36,10 @@
 
 			<div class="form-group row">
 				<div class="col-md-6">
-					{!! Form::date('submitted_at', $project->submitted_at, ['class'=>'form-control']) !!}
+					{!! Form::date_field('submitted_at', $project->submitted_at, ['class'=>'form-control']) !!}
 				</div>
 				<div class="col-md-6">
-					{!! Form::date('received_at', $project->received_at, ['class'=>'form-control']) !!}
+					{!! Form::date_field('received_at', $project->received_at, ['class'=>'form-control']) !!}
 				</div>
 			</div>
 

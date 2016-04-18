@@ -30,11 +30,11 @@
 	    	</div>
 			
 			<div class="form-group">
-	    		{!! Form::time('hours', $task->hours, ['class'=>'form-control', 'step'=>'0.25', 'placeholder'=>trans('messages.task.hours')]) !!}
+	    		{!! Form::time_field('hours', $task->hours, ['class'=>'form-control', 'step'=>'0.25', 'placeholder'=>trans('messages.task.hours')]) !!}
 	    	</div>
 			
 			<div class="form-group">
-	    		{!! Form::date('closed_at', $task->closed_at, ['class'=>'form-control', 'placeholder'=>trans('messages.task.closed_at')]) !!}
+	    		{!! Form::date_field('closed_at', $task->closed_at, ['class'=>'form-control', 'placeholder'=>trans('messages.task.closed_at')]) !!}
 	    	</div>
 			
 			<div class="form-group">
