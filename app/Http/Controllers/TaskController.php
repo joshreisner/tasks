@@ -32,7 +32,8 @@ class TaskController extends Controller {
 			->whereNull('tasks.closed_at')
 			->orderBy('tasks.urgent', 'desc')
 			->orderBy('projects.rate', 'desc')
-			->orderBy('tasks.created_at')
+			->orderBy('clients.name')
+			->orderBy('projects.name')
 			->select([
 				'tasks.id',
 				'tasks.urgent',
