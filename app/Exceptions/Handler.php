@@ -1,7 +1,7 @@
 <?php namespace App\Exceptions;
 
 use Exception;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Bugsnag\BugsnagLaravel\BugsnagExceptionHandler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

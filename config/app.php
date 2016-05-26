@@ -147,6 +147,7 @@ return [
 		Collective\Html\HtmlServiceProvider::class,
 		'Barryvdh\DomPDF\ServiceProvider',
 		'Barryvdh\Debugbar\ServiceProvider',
+		Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider::class,
 
 	],
 
@@ -201,6 +202,7 @@ return [
 		'HTML'      => Collective\Html\HtmlFacade::class,
 		'PDF'		=> 'Barryvdh\DomPDF\Facade',
 		'Str'		=> 'Illuminate\Support\Str',
+		'Bugsnag'	=> Bugsnag\BugsnagLaravel\BugsnagFacade::class,
 
 	],
 

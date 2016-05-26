@@ -65,6 +65,10 @@ Route::group(['middleware' => 'auth'], function()
 		$user->save();
 	});
 	
+	Route::get('test/error', function(){
+		trigger_error('test error!');
+	});
+	
 });
 
 # Form macros

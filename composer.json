@@ -8,7 +8,8 @@
 		"laravel/framework": "5.2.*",
 		"barryvdh/laravel-dompdf": "0.6.*",
         "laravelcollective/html": "5.2.*",
-		"barryvdh/laravel-debugbar": "^2.2"
+		"barryvdh/laravel-debugbar": "^2.2",
+		"bugsnag/bugsnag-laravel": "1.*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
