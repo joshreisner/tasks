@@ -1,8 +1,3 @@
-//= include ../../bower_components/jquery/dist/jquery.js
-//= include ../../bower_components/jquery-validation/dist/jquery.validate.js
-//= include ../../bower_components/bootstrap-sass/assets/javascripts/bootstrap.js
-//= include ../../bower_components/jstzdetect/jstz.js
-
 $(function(){
 
 	//general form validator
@@ -55,7 +50,7 @@ $(function(){
 		return parseFloat(Math.round(num * 100) / 100).toFixed(2);
 	}
 
-	//get timezone, update user record if different
+	/*get timezone, update user record if different
 	var tz = jstz.determine(), 
 		$meta = $('meta[name=timezone]'), 
 		token = $('meta[name=token]').attr('content'),
@@ -66,6 +61,6 @@ $(function(){
 		}
 	} else if ($input.size()) {
 		$input.val(tz.name());
-	}
+	}*/
 
 });
