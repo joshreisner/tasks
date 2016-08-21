@@ -23,7 +23,7 @@
 		@foreach ($weeks as $string => $week)
 		<a href="#{{ str_slug($string) }}" class="col-md-2 col-xs-6 @if ($week['amount'] < 1000) danger @endif">
 			<small>{{ $string }}</small>
-			{{ format_money($week['amount'], 0) }}
+			${{ number_format($week['amount']) }}
 		</a>
 		@endforeach
 	</div>
