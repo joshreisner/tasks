@@ -41,7 +41,12 @@
 			</tr>
 				@foreach ($week['tasks'] as $task)
 			<tr>
-				<td class="col-sm-1 hidden-xs" style="white-space:nowrap;"><span style="color:#aaa">{{ $task->closed_at->format('n/j') }}</span> {{ $task->closed_at->format('l') }}</td>
+				<td class="col-sm-1 hidden-xs">
+					<div class="row">
+						<div class="col-sm-4" style="color:#aaa">{{ $task->closed_at->format('n/j') }}</div>
+						<div class="col-sm-8">{{ $task->closed_at->format('D') }}</div>
+					</div>
+				</td>
 				<td class="col-sm-5 col-xs-6">{!! link_to(URL::action('TaskController@edit', $task->id), $task->title) !!}</td>
 				<td class="col-sm-4 col-xs-6"><a href="/clients/{{ $task->project->client->id }}">{{ $task->project->client->name }}</a> &gt; <a href="/projects/{{ $task->project->id }}">{{ $task->project->name }}</a></td>
 				<td class="col-sm-1 hidden-xs right">{{ format_hours($task->hours) }}</td>
