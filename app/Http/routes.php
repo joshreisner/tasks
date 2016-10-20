@@ -94,7 +94,7 @@ Form::macro('money_field', function($name, $value=null, $attributes=[])
     return '
 	<div class="input-group money">
 		<span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
-		<input type="number" step="5" name="' . $name . '"' . ($value !== null ? ' value="' . format_number($value) . '"' : '') . $attribute_string . '>
+		<input type="number" step="5" name="' . $name . '"' . ($value !== null ? ' value="' . $value . '"' : '') . $attribute_string . '>
 	</div>';
 });
 
