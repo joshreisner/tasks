@@ -26,9 +26,9 @@
 				<div class="input-group money">
 					<span class="input-group-addon"><a class="glyphicon glyphicon-usd"></a></span>
 					@if ($project->fixed)
-					{!! Form::input('number', 'amount', $project->amount, ['class'=>'form-control', 'step'=>5, 'placeholder'=>trans('messages.project.amount')]) !!}
+					{!! Form::input('number', 'amount', $project->amount, ['class'=>'form-control', 'placeholder'=>trans('messages.project.amount')]) !!}
 					@else
-					{!! Form::input('number', 'amount', $project->amount, ['disabled'=>true, 'class'=>'form-control', 'step'=>5, 'placeholder'=>trans('messages.project.amount')]) !!}
+					{!! Form::input('number', 'amount', $project->amount, ['disabled'=>true, 'class'=>'form-control', 'placeholder'=>trans('messages.project.amount')]) !!}
 					@endif
 					<span class="input-group-addon">{!! Form::checkbox('fixed', 1, $project->fixed) !!}</span>
 				</div>

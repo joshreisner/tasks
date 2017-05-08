@@ -41,9 +41,9 @@
 				<div class="input-group money">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
 					@if ($task->fixed)
-					{!! Form::input('number', 'amount', $task->amount, ['class'=>'form-control', 'step'=>5, 'placeholder'=>trans('messages.task.amount')]) !!}
+					{!! Form::input('number', 'amount', $task->amount, ['class'=>'form-control', 'placeholder'=>trans('messages.task.amount')]) !!}
 					@else
-					{!! Form::input('number', 'amount', $task->amount, ['disabled'=>true, 'class'=>'form-control', 'step'=>5, 'placeholder'=>trans('messages.task.amount')]) !!}
+					{!! Form::input('number', 'amount', $task->amount, ['disabled'=>true, 'class'=>'form-control', 'placeholder'=>trans('messages.task.amount')]) !!}
 					@endif
 					<span class="input-group-addon">{!! Form::checkbox('fixed', 1, $task->fixed) !!}</span>
 				</div>

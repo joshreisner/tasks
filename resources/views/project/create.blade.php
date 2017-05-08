@@ -21,7 +21,7 @@
 			<div class="form-group">
 				<div class="input-group money">
 					<span class="input-group-addon"><a class="glyphicon glyphicon-usd"></a></span>
-					{!! Form::input('number', 'amount', null, ['disabled'=>true, 'class'=>'form-control', 'step'=>5, 'placeholder'=>'Amount']) !!}
+					{!! Form::input('number', 'amount', null, ['disabled'=>true, 'class'=>'form-control', 'placeholder'=>'Amount']) !!}
 					<span class="input-group-addon">{!! Form::checkbox('fixed', 1) !!}</span>
 				</div>
 			</div>

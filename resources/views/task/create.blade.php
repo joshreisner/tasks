@@ -39,7 +39,7 @@
 			<div class="form-group">
 				<div class="input-group money">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
-					{!! Form::input('number', 'amount', null, ['disabled'=>true, 'class'=>'form-control', 'step'=>5, 'placeholder'=>trans('messages.task.amount')]) !!}
+					{!! Form::input('number', 'amount', null, ['disabled'=>true, 'class'=>'form-control', 'placeholder'=>trans('messages.task.amount')]) !!}
 					<span class="input-group-addon">{!! Form::checkbox('fixed', 1) !!}</span>
 				</div>
 			</div>
