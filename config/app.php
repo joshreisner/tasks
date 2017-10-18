@@ -147,7 +147,8 @@ return [
 		Collective\Html\HtmlServiceProvider::class,
 		'Barryvdh\DomPDF\ServiceProvider',
 		'Barryvdh\Debugbar\ServiceProvider',
-		Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider::class,
+		//Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider::class,
+		Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
 
 	],
 
@@ -202,7 +203,8 @@ return [
 		'HTML'      => Collective\Html\HtmlFacade::class,
 		'PDF'		=> 'Barryvdh\DomPDF\Facade',
 		'Str'		=> 'Illuminate\Support\Str',
-		'Bugsnag'	=> Bugsnag\BugsnagLaravel\BugsnagFacade::class,
+		//'Bugsnag'	=> Bugsnag\BugsnagLaravel\BugsnagFacade::class,
+		'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
 
 	],
 
