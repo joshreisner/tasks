@@ -147,8 +147,14 @@ class ProjectController extends Controller {
 			->get();
 
 		foreach ($projects as $project) {
+			$project->overdue = false;
 			if ($project->closed_at) {
-				$key = ($project->received_at) ? $project->received_at->format('Y') : 'Unreceived';
+				$key = 'Unreceived';
+				if ($project->received_at) {
+					$key = $project->received_at->format('Y');
+				} elseif ($project->submitted_at && ($project->submitted_at->diffInDays() > 45)) {
+					$project->overdue = true;
+				}
 			} else {
 				$key = 'Open';				
 			}

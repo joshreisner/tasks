@@ -22,7 +22,7 @@
 					<td colspan="7">{{ $year }}</td>
 				</tr>
 				@foreach ($projects['projects'] as $project)
-				<tr>
+				<tr @if ($project->overdue) class="urgent" @endif>
 					<td>{!! link_to(URL::action('ClientController@show', $project->client->id), $project->client->name) !!}</td>
 					<td>{!! link_to(URL::action('ProjectController@show', $project->id), $project->name) !!}</td>
 					<td class="hidden-xs">{{ format_date($project->closed_at) }}</td>
