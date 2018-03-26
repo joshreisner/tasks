@@ -17,6 +17,7 @@
 			#meta {  margin: 28pt 0 10pt; }
 			#meta h1 { font-size: 20pt; margin: 0; }
 			#meta h1 span { color: #aaa; }
+			#meta address { font-style: normal; font-family: 'Akkurat'; line-height: 1; }
 			table { width: 100%; font-size: 10pt; }
 			table th, table td { padding: 6px 0; text-align: left; vertical-align: top; }
 			table th { border-bottom: 2pt solid #ddd; font-size: 10pt; font-weight: normal; }
@@ -55,6 +56,9 @@
 		</div>
 		<div id="meta">
 			<h1>{{ $project->client->name }} > <span>{{ $project->name }}</span></h1>
+			@if ($project->client->address)
+				<address>{!! nl2br($project->client->address) !!}</address>
+			@endif
 		</div>
 		<table cellspacing="0">
 			<thead>

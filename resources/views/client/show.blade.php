@@ -5,7 +5,11 @@
 	<div class="col-md-12">
 
 		<h1>{{ $client->name }}</h1>
-			
+		
+		@if ($client->address)
+			<address>{!! nl2br($client->address) !!}</address>
+		@endif
+
 		<div class="form-group">
     		{!! link_to_action('ClientController@edit', trans('messages.client.edit'), [$client->id], ['class'=>'btn btn-default']) !!}
     		{!! link_to_action('ProjectController@create', trans('messages.project.create'), [$client->id], ['class'=>'btn btn-default']) !!}

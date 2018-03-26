@@ -11,6 +11,10 @@
 			<div class="form-group">
 				{!! Form::text('name', $client->name, ['placeholder'=>trans('messages.client.name'), 'class'=>'form-control', 'autofocus']) !!}
 			</div>
+
+			<div class="form-group">
+				{!! Form::textarea('address', $client->address, ['class'=>'form-control', 'placeholder'=>'Address', 'rows'=>3]) !!}
+			</div>
 			
 			<div class="form-group">
 	    		<input type="submit" class="btn btn-primary" value="@lang('messages.app.save')">
