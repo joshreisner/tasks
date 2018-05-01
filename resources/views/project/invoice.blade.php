@@ -10,15 +10,15 @@
 			    font-family: 'Akkurat';
 			    src: url('{{ public_path() }}/assets/fonts/AkkRg_Pro_1.ttf');
 			}
-			body { margin: 0; padding: 50pt 0 20pt; font-family: 'Akkurat'; color: #444; }
+			body { margin: 0; padding: 75pt 0 20pt; font-family: 'Akkurat'; color: #444; }
 			h1 { font-weight: normal; font-family: 'AkkuratBold'; }
 			#header { position: fixed; background-color: #eee; top: -34pt; right: -34pt; left: -34pt; padding: 35pt 34pt 15pt; }
 			#header h1 { font-size: 30pt; margin: 0; }
-			#meta {  margin: 28pt 0 10pt; }
+			#meta {  margin: 0 0 10pt; }
 			#meta h1 { font-size: 20pt; margin: 0; }
 			#meta h1 span { color: #aaa; }
 			#meta address { font-style: normal; font-family: 'Akkurat'; line-height: 1; }
-			table { width: 100%; font-size: 10pt; }
+			table { width: 100%; font-size: 10pt; margin-top: 10pt;}
 			table th, table td { padding: 6px 0; text-align: left; vertical-align: top; }
 			table th { border-bottom: 2pt solid #ddd; font-size: 10pt; font-weight: normal; }
 			table .date { white-space: nowrap; width: 15%; }
