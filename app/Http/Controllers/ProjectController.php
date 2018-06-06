@@ -1,4 +1,5 @@
-<?php namespace App\Http\Controllers;
+<?php
+namespace App\Http\Controllers;
 
 use App\Client;
 use App\Http\Requests;
@@ -9,7 +10,6 @@ use DB;
 use Illuminate\Http\Request;
 use Input;
 use PDF;
-use Str;
 use URL;
 
 class ProjectController extends Controller {
@@ -33,7 +33,7 @@ class ProjectController extends Controller {
 
 	public function store() {
 		$project = new Project;
-		$project->name = Str::title(Input::get('name'));
+		$project->name = title_case(Input::get('name'));
 		$project->client_id = Input::get('client_id');
 		$project->rate = Input::has('rate') ? Input::get('rate') : null;
 		$project->amount = Input::has('amount') ? Input::get('amount') : null;
@@ -117,8 +117,7 @@ class ProjectController extends Controller {
 		}])->find($id);
 		
 		return PDF::loadView('project.invoice', compact('project'))
-			->stream();
-			//->download(Str::slug($project->name) . '.pdf'); 
+			->stream(str_slug($project->client->name) . '.pdf');
 	}
 
 	public static function updateTotals($id) {

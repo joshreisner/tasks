@@ -1,4 +1,5 @@
-<?php namespace App\Http\Controllers;
+<?php
+namespace App\Http\Controllers;
 
 use App\Client;
 use App\Http\Requests;
@@ -8,8 +9,6 @@ use App\Task;
 use DB;
 use Illuminate\Http\Request;
 use Input;
-use Str;
-
 
 class ClientController extends Controller {
 
@@ -43,7 +42,7 @@ class ClientController extends Controller {
 	public function store()
 	{
 		$client = new Client;
-		$client->name = Str::title(Input::get('name'));
+		$client->name = title_case(Input::get('name'));
 		$client->address = Input::has('address') ? Input::get('address') : null;
 		$client->hours = $client->amount = 0;
 		$client->save();

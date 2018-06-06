@@ -1,4 +1,5 @@
-<?php namespace App\Http\Controllers;
+<?php
+namespace App\Http\Controllers;
 
 use App\Client;
 use App\Http\Requests;
@@ -13,16 +14,9 @@ use Input;
 use Session;
 use Illuminate\Http\Request;
 use URL;
-use Str;
-
 
 class TaskController extends Controller {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
 	public function index() {
 
 		//get open tasks
@@ -126,7 +120,6 @@ class TaskController extends Controller {
 		return redirect(Input::get('return_to'));
 	}
 	
-	//slightly smarter title case than Str::title()
 	//todo handle punctuation
 	private static function capitalize($string) {
 		$lowercase = ['a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', 'if', 'in', 'into', 'near', 'of', 
@@ -137,7 +130,7 @@ class TaskController extends Controller {
 			'TLD', 'URL', 'WordPress', 'XML',
 		];
 		$capitalize = array_combine(array_map('strtolower', $capitalize), $capitalize);
-		$words = explode(' ', Str::title(trim($string)));
+		$words = explode(' ', title_case(trim($string)));
 		$count = count($words);
 		for ($i = 0; $i < $count; $i++) {
 			$search = mb_strtolower($words[$i]);
@@ -154,14 +147,7 @@ class TaskController extends Controller {
 		return self::capitalize('the quick brown ios app jumped over the lazy html page.');
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
+	public function edit($id) {
 		$task = Task::find($id);
 		return view('task.edit', [
 			'task'=>$task,
@@ -170,14 +156,7 @@ class TaskController extends Controller {
 		]);
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id, Request $request)
-	{
+	public function update($id, Request $request) {
 	    $this->validate($request, [
 	        'title' => 'required|max:255',
 	        'project_id' => 'required',
@@ -211,14 +190,7 @@ class TaskController extends Controller {
 		return redirect(Input::get('return_to'));
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
+	public function destroy($id) {
 		$task = Task::find($id);
 		$task->delete();
 		ProjectController::updateTotals($task->project_id);
