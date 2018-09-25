@@ -47,7 +47,7 @@
 		<div id="footer">
 			<div>
 				<a href="mailto:josh@joshreisner.com">josh@joshreisner.com</a><br>
-				3024 Aspen Drive, Santa Clara, CA 95051
+				899 Pine St #1705, San Francisco, CA 94108
 			</div>
 			<div>
 				<span>TEL</span> <a href="tel:9172848483">917-284-8483</a><br>
