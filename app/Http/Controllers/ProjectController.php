@@ -26,7 +26,7 @@ class ProjectController extends Controller {
 	public function create($client_id=null) {
 		return view('project.create', [
 			'client_id' => $client_id,
-			'clients' => Client::orderBy('name')->lists('name', 'id'),
+			'clients' => Client::orderBy('name')->pluck('name', 'id'),
 			'return_to' => URL::previous() ?: URL::action('ProjectController@index'),
 		]);
 	}
@@ -63,7 +63,7 @@ class ProjectController extends Controller {
 		}
 		
 		return view('project.edit', [
-			'clients'=>Client::orderBy('name')->lists('name', 'id'),
+			'clients'=>Client::orderBy('name')->pluck('name', 'id'),
 			'project'=>$project,
 		]);
 	}

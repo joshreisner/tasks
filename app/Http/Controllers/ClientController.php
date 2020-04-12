@@ -88,7 +88,7 @@ class ClientController extends Controller {
 		$client->name = Input::get('name');
 		$client->address = Input::has('address') ? Input::get('address') : null;
 		$client->hours = $client->amount = 0;
-		if ($projects = Project::where('client_id', $id)->lists('id')) {
+		if ($projects = Project::where('client_id', $id)->pluck('id')) {
 			$client->hours = Task::whereIn('project_id', $projects)->count();
 			$client->amount = Task::whereIn('project_id', $projects)->sum('amount');
 		}
