@@ -103,7 +103,7 @@ class TaskController extends Controller {
 		$task->title = self::capitalize(Input::get('title'));
 		$task->created_by = Auth::id();
 		$task->project_id = Input::get('project_id');
-		Session::set('project_id', $task->project_id);
+		session('project_id', $task->project_id);
 		$task->hours = Input::filled('hours') ? Input::get('hours') : 0;
 		$task->closed_at = Input::filled('closed_at') ? Input::get('closed_at') : null;
 		$task->urgent = Input::filled('urgent') ? 1 : 0;
@@ -170,7 +170,7 @@ class TaskController extends Controller {
 				$old_project_id = $task->project_id;
 			}
 			$task->project_id = Input::get('project_id');
-			Session::set('project_id', $task->project_id);
+			session('project_id', $task->project_id);
 			
 		}
 		$task->hours = Input::filled('hours') ? Input::get('hours') : 0;
