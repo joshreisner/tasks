@@ -35,12 +35,12 @@ class ProjectController extends Controller {
 		$project = new Project;
 		$project->name = title_case(Input::get('name'));
 		$project->client_id = Input::get('client_id');
-		$project->rate = Input::has('rate') ? Input::get('rate') : null;
-		$project->amount = Input::has('amount') ? Input::get('amount') : null;
-		$project->closed_at = Input::has('closed_at') ? Input::get('closed_at') : null;
-		$project->submitted_at = Input::has('submitted_at') ? Input::get('submitted_at') : null;
-		$project->received_at = Input::has('received_at') ? Input::get('received_at') : null;
-		$project->fixed = Input::has('fixed') ? 1 : 0;
+		$project->rate = Input::filled('rate') ? Input::get('rate') : null;
+		$project->amount = Input::filled('amount') ? Input::get('amount') : null;
+		$project->closed_at = Input::filled('closed_at') ? Input::get('closed_at') : null;
+		$project->submitted_at = Input::filled('submitted_at') ? Input::get('submitted_at') : null;
+		$project->received_at = Input::filled('received_at') ? Input::get('received_at') : null;
+		$project->fixed = Input::filled('fixed') ? 1 : 0;
 		$project->save();
 
 		return redirect()->action('ProjectController@show', [$project->id]);
@@ -73,12 +73,12 @@ class ProjectController extends Controller {
 		$project = Project::find($id);
 		$project->name = Input::get('name');
 		$project->client_id = Input::get('client_id');
-		$project->rate = Input::has('rate') ? Input::get('rate') : null;
-		$project->amount = Input::has('amount') ? Input::get('amount') : null;
-		$project->fixed = Input::has('fixed') ? 1 : 0;
-		$project->closed_at = Input::has('closed_at') ? Input::get('closed_at') : null;
-		$project->submitted_at = Input::has('submitted_at') ? Input::get('submitted_at') : null;
-		$project->received_at = Input::has('received_at') ? Input::get('received_at') : null;
+		$project->rate = Input::filled('rate') ? Input::get('rate') : null;
+		$project->amount = Input::filled('amount') ? Input::get('amount') : null;
+		$project->fixed = Input::filled('fixed') ? 1 : 0;
+		$project->closed_at = Input::filled('closed_at') ? Input::get('closed_at') : null;
+		$project->submitted_at = Input::filled('submitted_at') ? Input::get('submitted_at') : null;
+		$project->received_at = Input::filled('received_at') ? Input::get('received_at') : null;
 		$project->hours = Task::where('project_id', $id)->sum('hours');
 		
 		# Update individual task amounts because rate could have changed

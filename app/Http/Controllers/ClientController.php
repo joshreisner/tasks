@@ -43,7 +43,7 @@ class ClientController extends Controller {
 	{
 		$client = new Client;
 		$client->name = title_case(Input::get('name'));
-		$client->address = Input::has('address') ? Input::get('address') : null;
+		$client->address = Input::filled('address') ? Input::get('address') : null;
 		$client->hours = $client->amount = 0;
 		$client->save();
 		return redirect()->action('ClientController@show', $client->id);
@@ -86,7 +86,7 @@ class ClientController extends Controller {
 	{
 		$client = Client::find($id);
 		$client->name = Input::get('name');
-		$client->address = Input::has('address') ? Input::get('address') : null;
+		$client->address = Input::filled('address') ? Input::get('address') : null;
 		$client->hours = $client->amount = 0;
 		if ($projects = Project::where('client_id', $id)->pluck('id')) {
 			$client->hours = Task::whereIn('project_id', $projects)->count();

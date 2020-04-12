@@ -104,13 +104,13 @@ class TaskController extends Controller {
 		$task->created_by = Auth::id();
 		$task->project_id = Input::get('project_id');
 		Session::set('project_id', $task->project_id);
-		$task->hours = Input::has('hours') ? Input::get('hours') : 0;
-		$task->closed_at = Input::has('closed_at') ? Input::get('closed_at') : null;
-		$task->urgent = Input::has('urgent') ? 1 : 0;
-		if (Input::has('closed_at')) $task->urgent = 0; // closed tasks are not urgent
-		if (Input::has('fixed')) {
+		$task->hours = Input::filled('hours') ? Input::get('hours') : 0;
+		$task->closed_at = Input::filled('closed_at') ? Input::get('closed_at') : null;
+		$task->urgent = Input::filled('urgent') ? 1 : 0;
+		if (Input::filled('closed_at')) $task->urgent = 0; // closed tasks are not urgent
+		if (Input::filled('fixed')) {
 			$task->fixed = 1;
-			$task->amount = (Input::has('amount')) ? $task->amount : 0;
+			$task->amount = (Input::filled('amount')) ? $task->amount : 0;
 		} else {
 			$task->fixed = 0;
 			$task->amount = $task->hours * ($task->project->rate ?: 0);
@@ -164,7 +164,7 @@ class TaskController extends Controller {
 
 		$task = Task::find($id);
 		$task->title = Input::get('title');
-		if (Input::has('project_id')) {
+		if (Input::filled('project_id')) {
 			if (Input::get('project_id') != $task->project_id) {
 				//remember to update old project tasks as well
 				$old_project_id = $task->project_id;
@@ -173,13 +173,13 @@ class TaskController extends Controller {
 			Session::set('project_id', $task->project_id);
 			
 		}
-		$task->hours = Input::has('hours') ? Input::get('hours') : 0;
-		$task->closed_at = Input::has('closed_at') ? Input::get('closed_at') : null;
-		$task->urgent = Input::has('urgent') ? 1 : 0;
-		if (Input::has('closed_at')) $task->urgent = 0; // closed tasks are not urgent
-		if (Input::has('fixed')) {
+		$task->hours = Input::filled('hours') ? Input::get('hours') : 0;
+		$task->closed_at = Input::filled('closed_at') ? Input::get('closed_at') : null;
+		$task->urgent = Input::filled('urgent') ? 1 : 0;
+		if (Input::filled('closed_at')) $task->urgent = 0; // closed tasks are not urgent
+		if (Input::filled('fixed')) {
 			$task->fixed = 1;
-			$task->amount = (Input::has('amount')) ? Input::get('amount') : 0;
+			$task->amount = (Input::filled('amount')) ? Input::get('amount') : 0;
 		} else {
 			$task->fixed = 0;
 			$task->amount = $task->hours * ($task->project->rate ?: 0);
