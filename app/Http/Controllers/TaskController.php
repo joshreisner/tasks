@@ -79,8 +79,11 @@ class TaskController extends Controller {
 		}
 		
 		//dd($weeks);
+		$remaining = 500 - Task::whereHas('project', function($q) {
+			$q->where('client_id', 61)->where('created_at', '>', '2019-11-01')->whereNull('deleted_at');
+		})->sum('hours');
 		
-		return view('task.index', compact('open', 'weeks'));
+		return view('task.index', compact('open', 'weeks', 'remaining'));
 
 	}
 

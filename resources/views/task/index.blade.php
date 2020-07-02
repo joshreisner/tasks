@@ -4,7 +4,7 @@
 
 <div class="col-md-12">
 
-	<h1>Tasks</h1>
+	<h1>Tasks <small class="text-muted pull-right">{{ $remaining }}</small></h1>
 	
 	<table class="table">
 		<tbody>
